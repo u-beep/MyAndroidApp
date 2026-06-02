@@ -9,41 +9,49 @@
     android:padding="20dp"
     tools:context=".LoginActivity">
 
-    <!-- 账号输入框 -->
+    <!-- 账号输入框（只能输入英文和数字） -->
     <EditText
         android:id="@+id/et_account"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="请输入账号"
+        android:padding="12dp"
+        android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.9"
-        android:layout_marginTop="120dp"/>
+        android:layout_marginTop="120dp" />
 
-    <!-- 密码输入框 -->
+    <!-- 密码输入框（最多12位 + 密码样式） -->
     <EditText
         android:id="@+id/et_pwd"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="请输入密码"
         android:inputType="textPassword"
+        android:maxLength="12"
+        android:padding="12dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_account"
         app:layout_constraintWidth_percent="0.9"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp" />
 
-    <!-- 登录按钮 -->
+    <!-- 登录按钮（点击变色 + 圆角） -->
     <Button
         android:id="@+id/btn_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="登录"
+        android:backgroundTint="@color/btn_color_selector"
+        android:textColor="#FFFFFF"
+        android:padding="12dp"
+        app:cornerRadius="12dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_pwd"
         app:layout_constraintWidth_percent="0.9"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="30dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

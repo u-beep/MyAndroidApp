@@ -5,22 +5,12 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_login)
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         // 绑定控件
         val etAccount = findViewById<EditText>(R.id.et_account)
@@ -32,10 +22,25 @@ class LoginActivity : AppCompatActivity() {
             val account = etAccount.text.toString().trim()
             val pwd = etPwd.text.toString().trim()
 
-            // 简单判断
+            // 判断账号是否为空
+            if (account.isEmpty()) {
+                Toast.makeText(this, "请输入账号", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // 判断密码是否为空
+            if (pwd.isEmpty()) {
+                Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // 判断账号密码是否正确
             if (account == "admin" && pwd == "123456") {
-                // 跳转到主页（假设叫 MainActivity）
+                Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show()
+
+                // 跳转 + 传账号到主页
                 val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("USER_ACCOUNT", account)
                 startActivity(intent)
                 finish() // 关掉登录页
             } else {
