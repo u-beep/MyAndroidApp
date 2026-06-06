@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+        按钮通用样式
+        使用方式：style="@style/MyButton"
+        修改这里一次，所有用这个样式的按钮都会跟着变！
+    -->
+    <style name="MyButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
+    <!--
+        输入框通用样式
+        使用方式：style="@style/MyEditText"
+        修改这里一次，所有用这个样式的输入框都会跟着变！
+    -->
+    <style name="MyEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <!--
+        密码输入框容器样式（TextInputLayout）
+        使用方式：style="@style/MyPasswordInput"
+        统一管理密码切换图标、间距等
+    -->
+    <style name="MyPasswordInput">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="endIconMode">password_toggle</item>
+        <item name="hintEnabled">false</item>
+    </style>
+
+</resources>

@@ -1,43 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 注册页面布局：ScrollView滚动布局 + LinearLayout -->
-<!-- ScrollView：内容超出屏幕时可以上下滑动 -->
-<!-- 规则：ScrollView内部只能有一个直接子布局 -->
+<!-- 注册页面：ScrollView滚动布局 + Style样式 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- 唯一一层子布局，所有内容放这里 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp">
 
-        <!--
-            注册账号输入框
-            hint = 输入框为空时显示的灰色提示文字
-            digits = 限制只能输入字母和数字
-        -->
+        <!-- 注册账号（用 MyEditText 样式简化） -->
         <EditText
             android:id="@+id/et_account"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/MyEditText"
             android:hint="请输入注册账号"
-            android:padding="12dp"
             android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" />
 
-        <!--
-            注册密码输入框（带密码显示/隐藏切换）
-            TextInputLayout + endIconMode="password_toggle"
-        -->
+        <!-- 注册密码（用 MyPasswordInput 样式简化） -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_pwd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:endIconMode="password_toggle"
-            app:hintEnabled="false"
-            android:layout_marginTop="10dp">
+            style="@style/MyPasswordInput">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_pwd"
@@ -50,16 +34,10 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!--
-            确认密码输入框（带密码显示/隐藏切换）
-        -->
+        <!-- 确认密码（用 MyPasswordInput 样式简化） -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_pwd2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:endIconMode="password_toggle"
-            app:hintEnabled="false"
-            android:layout_marginTop="10dp">
+            style="@style/MyPasswordInput">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_pwd2"
@@ -72,12 +50,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!--
-            性别单选（RadioGroup + RadioButton）
-            RadioGroup = 分组容器，一组里只能选一个
-            RadioButton = 单个选项
-            orientation = horizontal 横向排列
-        -->
+        <!-- 性别单选 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -107,10 +80,7 @@
                 android:layout_marginStart="30dp" />
         </RadioGroup>
 
-        <!--
-            爱好多选（CheckBox）
-            CheckBox = 独立使用，可以同时勾选多个
-        -->
+        <!-- 爱好多选 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -137,19 +107,22 @@
             android:layout_height="wrap_content"
             android:text="玩游戏" />
 
-        <!--
-            完成注册按钮
-            backgroundTint = 绿色#4CAF50（注册用绿色区分登录蓝色）
-        -->
+        <!-- 注册按钮（用 MyButton 样式简化） -->
         <Button
             android:id="@+id/btn_register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/MyButton"
             android:text="完成注册"
             android:backgroundTint="#4CAF50"
-            android:textColor="#FFFFFF"
-            android:padding="12dp"
             android:layout_marginTop="25dp" />
+
+        <!-- 加载动画（注册时显示） -->
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp" />
 
     </LinearLayout>
 </ScrollView>

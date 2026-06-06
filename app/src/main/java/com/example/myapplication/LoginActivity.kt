@@ -10,8 +10,12 @@ import android.widget.Button
 import android.widget.CheckBox
 // EditText：输入框控件
 import android.widget.EditText
+// ProgressBar：加载进度条控件
+import android.widget.ProgressBar
 // Toast：弹出的短暂提示消息
 import android.widget.Toast
+// View：控件基类，用于控制显示/隐藏
+import android.view.View
 // AppCompatActivity：兼容低版本Android的Activity基类
 import androidx.appcompat.app.AppCompatActivity
 
@@ -35,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
         val etPwd = findViewById<EditText>(R.id.et_pwd)               // 密码输入框
         val btnLogin = findViewById<Button>(R.id.btn_login)           // 登录按钮
         val cbRemember = findViewById<CheckBox>(R.id.cb_remember)     // 记住密码复选框
+        val loading = findViewById<ProgressBar>(R.id.loading)         // 加载进度条
 
         // ============================================
         // 打开页面时，自动读取保存的账号密码
@@ -69,6 +74,12 @@ class LoginActivity : AppCompatActivity() {
         // ============================================
         btnLogin.setOnClickListener {
 
+            // ============================================
+            // 第一步：显示加载动画 + 禁止重复点击
+            // ============================================
+            loading.visibility = View.VISIBLE     // 显示转圈动画
+            btnLogin.isEnabled = false            // 禁止重复点击按钮
+
             // .text.toString()：获取输入框中的文字并转成字符串
             // .trim()：去掉文字前后的空格（防止用户多打了空格）
             val account = etAccount.text.toString().trim()
@@ -78,14 +89,10 @@ class LoginActivity : AppCompatActivity() {
             // 判断账号是否为空
             // --------------------------------------------
             if (account.isEmpty()) {
-                // Toast：弹出短暂提示
-                //   第1个参数 this = 上下文（当前Activity）
-                //   第2个参数 = 提示文字
-                //   第3个参数 Toast.LENGTH_SHORT = 短时间显示
-                //   .show() = 显示出来（不调用show()就不会弹出）
                 Toast.makeText(this, "请输入账号", Toast.LENGTH_SHORT).show()
-
-                // return@setOnClickListener：提前结束点击事件，不往下执行
+                // 隐藏加载 + 恢复按钮
+                loading.visibility = View.GONE
+                btnLogin.isEnabled = true
                 return@setOnClickListener
             }
 
@@ -94,37 +101,32 @@ class LoginActivity : AppCompatActivity() {
             // --------------------------------------------
             if (pwd.isEmpty()) {
                 Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show()
+                loading.visibility = View.GONE
+                btnLogin.isEnabled = true
                 return@setOnClickListener
             }
 
             // --------------------------------------------
             // 判断账号密码是否正确
-            // 存储格式变了："密码|性别|爱好"
-            // 需要先取出完整字符串，按 | 切割，取第一段作为密码
+            // 存储格式："密码|性别|爱好"
             // --------------------------------------------
-
-            // 获取所有注册的账号（和注册页用的是同一个文件 "USER_LIST"）
             val spUserList = getSharedPreferences("USER_LIST", MODE_PRIVATE)
-
-            // getString(account, "")：用账号名去查存储的数据
-            //   存储格式："密码|性别|爱好"，例如 "123456|男|篮球 看书"
             val userData = spUserList.getString(account, "")
 
-            // 如果找不到这个账号，说明没注册过
             if (userData.isNullOrEmpty()) {
                 Toast.makeText(this, "账号或密码错误", Toast.LENGTH_SHORT).show()
+                loading.visibility = View.GONE
+                btnLogin.isEnabled = true
                 return@setOnClickListener
             }
 
-            // 按 | 切割字符串，取出各部分
-            // split("\\|")：| 是正则特殊字符，要用 \\ 转义
-            // arr[0] = 密码，arr[1] = 性别，arr[2] = 爱好
             val arr = userData.split("\\|".toRegex())
-            val realPwd = arr[0]     // 第一段就是密码
+            val realPwd = arr[0]
 
-            // 如果查到的密码 和 用户输入的密码 不一样，就是错误
             if (realPwd != pwd) {
                 Toast.makeText(this, "账号或密码错误", Toast.LENGTH_SHORT).show()
+                loading.visibility = View.GONE
+                btnLogin.isEnabled = true
                 return@setOnClickListener
             }
 

@@ -8,10 +8,14 @@ import android.widget.Button
 import android.widget.CheckBox
 // EditText：输入框控件
 import android.widget.EditText
+// ProgressBar：加载进度条控件
+import android.widget.ProgressBar
 // RadioGroup：单选分组容器
 import android.widget.RadioGroup
 // Toast：弹出的短暂提示消息
 import android.widget.Toast
+// View：控件基类，用于控制显示/隐藏
+import android.view.View
 // AppCompatActivity：兼容低版本Android的Activity基类
 import androidx.appcompat.app.AppCompatActivity
 
@@ -43,11 +47,16 @@ class RegisterActivity : AppCompatActivity() {
         val cbBall = findViewById<CheckBox>(R.id.cb_ball)             // 爱好：打篮球
         val cbBook = findViewById<CheckBox>(R.id.cb_book)             // 爱好：看书
         val cbGame = findViewById<CheckBox>(R.id.cb_game)             // 爱好：玩游戏
+        val loading = findViewById<ProgressBar>(R.id.loading)         // 加载进度条
 
         // ============================================
         // 点击注册按钮
         // ============================================
         btnRegister.setOnClickListener {
+
+            // 显示加载动画 + 禁止重复点击
+            loading.visibility = View.VISIBLE
+            btnRegister.isEnabled = false
 
             // .text.toString()：获取输入框中的文字并转成字符串
             // .trim()：去掉文字前后的空格
@@ -60,6 +69,8 @@ class RegisterActivity : AppCompatActivity() {
             // --------------------------------------------
             if (account.isEmpty() || pwd.isEmpty() || pwd2.isEmpty()) {
                 Toast.makeText(this, "请填写完整", Toast.LENGTH_SHORT).show()
+                loading.visibility = View.GONE
+                btnRegister.isEnabled = true
                 return@setOnClickListener
             }
 
@@ -68,6 +79,8 @@ class RegisterActivity : AppCompatActivity() {
             // --------------------------------------------
             if (pwd != pwd2) {
                 Toast.makeText(this, "两次密码不一致", Toast.LENGTH_SHORT).show()
+                loading.visibility = View.GONE
+                btnRegister.isEnabled = true
                 return@setOnClickListener
             }
 
@@ -98,6 +111,8 @@ class RegisterActivity : AppCompatActivity() {
             val sp = getSharedPreferences("USER_LIST", MODE_PRIVATE)
             if (sp.contains(account)) {
                 Toast.makeText(this, "账号已存在", Toast.LENGTH_SHORT).show()
+                loading.visibility = View.GONE
+                btnRegister.isEnabled = true
                 return@setOnClickListener
             }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 修改密码页面布局：ConstraintLayout约束布局 -->
+<!-- 修改密码页面：ConstraintLayout + Style样式 -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,15 +10,11 @@
     android:padding="20dp"
     tools:context=".ChangePwdActivity">
 
-    <!--
-        旧密码输入框（带密码显示/隐藏切换）
-    -->
+    <!-- 旧密码（用 MyPasswordInput 样式简化） -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_old_pwd"
+        style="@style/MyPasswordInput"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:endIconMode="password_toggle"
-        app:hintEnabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -35,15 +31,11 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--
-        新密码输入框（带密码显示/隐藏切换）
-    -->
+    <!-- 新密码（用 MyPasswordInput 样式简化） -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_new_pwd"
+        style="@style/MyPasswordInput"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:endIconMode="password_toggle"
-        app:hintEnabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_old_pwd"
@@ -61,15 +53,11 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--
-        确认新密码输入框（带密码显示/隐藏切换）
-    -->
+    <!-- 确认新密码（用 MyPasswordInput 样式简化） -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_new_pwd2"
+        style="@style/MyPasswordInput"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:endIconMode="password_toggle"
-        app:hintEnabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_new_pwd"
@@ -87,18 +75,13 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--
-        确认修改按钮
-    -->
+    <!-- 确认修改按钮（用 MyButton 样式简化） -->
     <Button
         android:id="@+id/btn_confirm"
+        style="@style/MyButton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:text="确认修改"
         android:backgroundTint="#FF9800"
-        android:textColor="#FFFFFF"
-        android:padding="12dp"
-        app:cornerRadius="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_new_pwd2"
