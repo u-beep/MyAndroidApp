@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 根布局：ConstraintLayout约束布局，通过约束关系定位子控件 -->
+<!-- 核心规则：每个控件必须给 水平 + 垂直 两个方向的约束 -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,18 +12,55 @@
     tools:context=".LoginActivity">
 
     <!--
+        顶部用户头像（圆形）
+        约束方式：水平居中 + 靠上
+        layout_width/height = 100dp 固定宽高，保证圆形
+        src = 引用 drawable 里的头像图片
+        background = circle_head 圆形背景，配合 clipToOutline 裁剪成圆形
+        scaleType = centerCrop 等比裁剪填满，头像首选！
+        clipToOutline = true 按照背景形状裁剪图片，实现圆形效果
+        constraintStart/End = 左右贴着parent → 水平居中
+        constraintTop = 顶部贴着parent
+        marginTop = 距离顶部30dp
+    -->
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/head"
+        android:background="@drawable/circle_head"
+        android:scaleType="centerCrop"
+        android:clipToOutline="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="30dp" />
+
+    <!--
+        标题文字
+        约束方式：水平居中 + 在头像下面
+        constraintStart/End = 左右贴着parent → 水平居中
+        constraintTop = 顶部贴着头像底部（A在B下面 → Top_toBottomOf="@id/B"）
+        marginTop = 距离头像20dp
+    -->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="用户登录"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_head"
+        android:layout_marginTop="20dp" />
+
+    <!--
         账号输入框
-        每个属性说明：
-        id          = 控件唯一标识，Kotlin中通过R.id.et_account找到它
-        layout_width= 0dp 配合 constraintWidth_percent 表示按百分比设宽度
-        layout_height= wrap_content 高度随内容自适应
-        hint        = 输入框为空时显示的灰色提示文字
-        padding     = 内边距，文字距离输入框边缘12dp
-        digits      = 限制只能输入这些字符（0-9 a-z A-Z）
-        constraintLeft/Right = 左右各贴着父布局
-        constraintTop       = 顶部贴着父布局顶部
-        constraintWidth_percent = 宽度占父布局的90%
-        marginTop   = 距离顶部120dp，让输入框偏下居中
+        约束方式：水平铺满 + 在标题下面
+        constraintStart/End = 左右贴着parent → 水平铺满
+        constraintTop = 顶部贴着标题底部
+        marginTop = 距离标题30dp
     -->
     <EditText
         android:id="@+id/et_account"
@@ -31,26 +69,17 @@
         android:hint="请输入账号"
         android:padding="12dp"
         android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.9"
-        android:layout_marginTop="120dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        android:layout_marginTop="30dp" />
 
     <!--
         密码输入框
-        每个属性说明：
-        id          = 控件唯一标识
-        layout_width= 0dp 配合 constraintWidth_percent 按百分比设宽度
-        layout_height= wrap_content 高度随内容自适应
-        hint        = 输入框为空时的灰色提示文字
-        inputType   = textPassword 输入的内容显示成小圆点（●●●●）
-        maxLength   = 最多只能输入12个字符
-        padding     = 内边距12dp
-        constraintLeft/Right = 左右各贴着父布局
-        constraintTop       = 顶部贴着账号框底部
-        constraintWidth_percent = 宽度占父布局的90%
-        marginTop   = 距离账号框20dp
+        约束方式：水平铺满 + 在账号框下面
+        constraintStart/End = 左右贴着parent → 水平铺满
+        constraintTop = 顶部贴着账号框底部
+        marginTop = 距离账号框10dp
     -->
     <EditText
         android:id="@+id/et_pwd"
@@ -60,22 +89,17 @@
         android:inputType="textPassword"
         android:maxLength="12"
         android:padding="12dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_account"
-        app:layout_constraintWidth_percent="0.9"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="10dp" />
 
     <!--
         记住密码勾选框
-        每个属性说明：
-        id           = 控件唯一标识
-        layout_width = wrap_content 宽度随文字内容自适应
-        layout_height= wrap_content 高度随内容自适应
-        text         = 显示的文字"记住密码"
-        marginTop    = 距离密码框10dp
-        constraintLeft = 左对齐密码框的左边
-        constraintTop  = 顶部贴着密码框底部
+        约束方式：靠左 + 在密码框下面
+        constraintStart = 左边贴着parent（靠左）
+        constraintTop = 顶部贴着密码框底部
+        marginTop = 距离密码框10dp
     -->
     <CheckBox
         android:id="@+id/cb_remember"
@@ -83,26 +107,16 @@
         android:layout_height="wrap_content"
         android:text="记住密码"
         android:minHeight="48dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintLeft_toLeftOf="@id/et_pwd"
-        app:layout_constraintTop_toBottomOf="@id/et_pwd" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_pwd"
+        android:layout_marginTop="10dp" />
 
     <!--
         登录按钮
-        每个属性说明：
-        id              = 控件唯一标识
-        layout_width    = 0dp 配合 constraintWidth_percent 按百分比设宽度
-        layout_height   = wrap_content 高度随内容自适应
-        text            = 按钮上显示的文字"登录"
-        backgroundTint  = 按钮背景色，引用颜色selector：
-                          正常时蓝色#2196F3，按下时深蓝#1976D2
-        textColor       = 按钮文字颜色，#FFFFFF白色
-        padding         = 内边距12dp
-        cornerRadius    = 圆角半径12dp（Material按钮属性）
-        constraintLeft/Right = 左右各贴着父布局
-        constraintTop       = 顶部贴着复选框底部
-        constraintWidth_percent = 宽度占父布局的90%
-        marginTop       = 距离复选框30dp
+        约束方式：水平铺满 + 在记住密码下面
+        constraintStart/End = 左右贴着parent → 水平铺满
+        constraintTop = 顶部贴着记住密码底部
+        marginTop = 距离记住密码20dp
     -->
     <Button
         android:id="@+id/btn_login"
@@ -113,27 +127,17 @@
         android:textColor="#FFFFFF"
         android:padding="12dp"
         app:cornerRadius="12dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cb_remember"
-        app:layout_constraintWidth_percent="0.9"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="20dp" />
 
     <!--
         去注册按钮
-        每个属性说明：
-        id              = 控件唯一标识
-        layout_width    = 0dp 配合 constraintWidth_percent 按百分比设宽度
-        layout_height   = wrap_content 高度随内容自适应
-        text            = 按钮上显示的文字"去注册"
-        backgroundTint  = 按钮背景色，灰色#9E9E9E（与登录按钮区分）
-        textColor       = 按钮文字颜色，#FFFFFF白色
-        padding         = 内边距12dp
-        cornerRadius    = 圆角12dp，与登录按钮风格统一
-        constraintLeft/Right = 左右各贴着父布局
-        constraintTop       = 顶部贴着登录按钮底部
-        constraintWidth_percent = 宽度占父布局的90%
-        marginTop       = 距离登录按钮10dp
+        约束方式：水平铺满 + 在登录按钮下面
+        constraintStart/End = 左右贴着parent → 水平铺满
+        constraintTop = 顶部贴着登录按钮底部
+        marginTop = 距离登录按钮10dp
     -->
     <Button
         android:id="@+id/btn_to_register"
@@ -144,27 +148,17 @@
         android:textColor="#FFFFFF"
         android:padding="12dp"
         app:cornerRadius="12dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_login"
-        app:layout_constraintWidth_percent="0.9"
         android:layout_marginTop="10dp" />
 
     <!--
         修改密码按钮
-        每个属性说明：
-        id              = 控件唯一标识
-        layout_width    = 0dp 配合 constraintWidth_percent 按百分比设宽度
-        layout_height   = wrap_content 高度随内容自适应
-        text            = 按钮上显示的文字"修改密码"
-        backgroundTint  = 按钮背景色，橙色#FF9800
-        textColor       = 按钮文字颜色，#FFFFFF白色
-        padding         = 内边距12dp
-        cornerRadius    = 圆角12dp，与其他按钮风格统一
-        constraintLeft/Right = 左右各贴着父布局
-        constraintTop       = 顶部贴着去注册按钮底部
-        constraintWidth_percent = 宽度占父布局的90%
-        marginTop       = 距离去注册按钮10dp
+        约束方式：水平铺满 + 在去注册按钮下面
+        constraintStart/End = 左右贴着parent → 水平铺满
+        constraintTop = 顶部贴着去注册按钮底部
+        marginTop = 距离去注册按钮10dp
     -->
     <Button
         android:id="@+id/btn_to_change_pwd"
@@ -175,10 +169,9 @@
         android:textColor="#FFFFFF"
         android:padding="12dp"
         app:cornerRadius="12dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_to_register"
-        app:layout_constraintWidth_percent="0.9"
         android:layout_marginTop="10dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

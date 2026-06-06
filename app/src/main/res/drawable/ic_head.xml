@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 默认人物头像图标（矢量图） -->
+<!-- 包含一个圆形头部 + 半圆身体，适合做默认头像 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- 背景：浅灰色圆形 -->
+    <path
+        android:pathData="M50,50m-48,0a48,48 0,1 1,96 0a48,48 0,1 1,-96 0"
+        android:fillColor="#E0E0E0"/>
+
+    <!-- 头部：深灰色圆 -->
+    <path
+        android:pathData="M50,38m-16,0a16,16 0,1 1,32 0a16,16 0,1 1,-32 0"
+        android:fillColor="#9E9E9E"/>
+
+    <!-- 身体：深灰色半圆弧 -->
+    <path
+        android:pathData="M20,85 Q20,60 50,58 Q80,60 80,85"
+        android:fillColor="#9E9E9E"/>
+
+</vector>

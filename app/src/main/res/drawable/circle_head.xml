@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 圆形头像背景 -->
+<!-- shape=oval 表示椭圆，当控件宽高一致时就是正圆 -->
+<!-- solid=白色填充，作为头像的底色 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <!-- oval=椭圆，宽高一致就是正圆 -->
+    <solid android:color="#ffffff"/>
+</shape>
