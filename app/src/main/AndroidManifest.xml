@@ -99,6 +99,24 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <!-- SQLite备忘录列表页面 -->
+        <!-- android:exported=false 不允许外部调用（仅APP内部跳转） -->
+        <activity
+            android:name=".MemoListActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <!-- SQLite备忘录编辑页面 -->
+        <!-- android:exported=false 不允许外部调用（仅APP内部跳转） -->
+        <activity
+            android:name=".EditMemoActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication"
+            android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
 </manifest>

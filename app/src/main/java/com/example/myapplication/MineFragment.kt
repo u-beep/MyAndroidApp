@@ -54,11 +54,10 @@ class MineFragment : Fragment() {
         }
 
         // ============================================
-        // 备忘录按钮 → 跳转备忘录页面
+        // 备忘录按钮 → 跳转备忘录页面（新版SQLite备忘录）
         // ============================================
         view.findViewById<Button>(R.id.btn_memo).setOnClickListener {
-            val intent = Intent(requireContext(), MemoActivity::class.java)
-            intent.putExtra("MEMO_ACCOUNT", account)
+            val intent = Intent(requireContext(), MemoListActivity::class.java)
             startActivity(intent)
         }
 
