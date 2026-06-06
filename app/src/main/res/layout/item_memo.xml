@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================ -->
+<!-- 备忘录列表单条目布局                         -->
+<!-- 显示：备忘录内容（截取前几行）+ 保存时间     -->
+<!-- 右侧有删除按钮                               -->
+<!-- ============================================ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="#F5F5F5"
+    android:layout_marginBottom="8dp">
+
+    <!-- ============================================ -->
+    <!-- 左侧：内容 + 时间，纵向排列                  -->
+    <!-- layout_weight="1"：占据除删除按钮外的空间     -->
+    <!-- ============================================ -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- 备忘录内容预览（最多显示2行） -->
+        <TextView
+            android:id="@+id/tv_memo_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:maxLines="2"
+            android:ellipsize="end" />
+
+        <!-- 保存时间 -->
+        <TextView
+            android:id="@+id/tv_memo_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#999999"
+            android:layout_marginTop="4dp" />
+
+    </LinearLayout>
+
+    <!-- ============================================ -->
+    <!-- 右侧：删除按钮                               -->
+    <!-- ============================================ -->
+    <Button
+        android:id="@+id/btn_delete_memo"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:text="删除"
+        android:textSize="12sp"
+        android:layout_marginLeft="8dp"
+        android:backgroundTint="#E53935"
+        android:textColor="#FFFFFF"
+        android:minWidth="60dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cornerRadius="8dp" />
+
+</LinearLayout>

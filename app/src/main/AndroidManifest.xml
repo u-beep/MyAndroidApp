@@ -59,6 +59,24 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <!-- 备忘录页面 -->
+        <!-- android:exported=false 不允许外部调用（仅APP内部跳转） -->
+        <activity
+            android:name=".MemoActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <!-- 备忘录编辑页面 -->
+        <!-- android:exported=false 不允许外部调用（仅APP内部跳转） -->
+        <activity
+            android:name=".MemoEditActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication"
+            android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
 </manifest>
