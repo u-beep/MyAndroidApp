@@ -36,6 +36,30 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         // ============================================
+        // 自动登录判断（核心功能）
+        //
+        // 流程：
+        //   1. 读取设置中的“自动登录”开关状态
+        //   2. 读取保存的用户账号
+        //   3. 如果开关打开 && 有保存的账号 → 直接跳主页，不用输入密码
+        //   4. 否则正常显示登录页
+        // ============================================
+        val spSetting = getSharedPreferences("SETTING", MODE_PRIVATE)
+        val autoLogin = spSetting.getBoolean("auto_login", false)
+
+        val spUser = getSharedPreferences("USER_DATA", MODE_PRIVATE)
+        val savedAccount = spUser.getString("account", "")
+
+        // 如果开启了自动登录，并且有保存的账号，直接跳主页
+        if (autoLogin && !savedAccount.isNullOrEmpty()) {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("USER_ACCOUNT", savedAccount)
+            startActivity(intent)
+            finish()
+            return  // 直接返回，不执行下面的登录页逻辑
+        }
+
+        // ============================================
         // 绑定控件：通过findViewById找到XML中定义的控件
         // R.id.xxx 就是XML中 android:id="@+id/xxx" 的对应
         // ============================================

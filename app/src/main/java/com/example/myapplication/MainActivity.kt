@@ -91,6 +91,7 @@ class MainActivity : AppCompatActivity() {
         val rvUserList = findViewById<RecyclerView>(R.id.rv_user_list)
         val btnMemo = findViewById<Button>(R.id.btn_memo)
         val btnOpenImg = findViewById<Button>(R.id.btn_open_img)   // 打开相册按钮
+        val btnSetting = findViewById<Button>(R.id.btn_setting)     // 设置按钮
         ivShow = findViewById(R.id.iv_show)                         // 图片展示区域
 
         // ============================================
@@ -169,6 +170,14 @@ class MainActivity : AppCompatActivity() {
         btnMemo.setOnClickListener {
             val intent = Intent(this, MemoActivity::class.java)
             intent.putExtra("MEMO_ACCOUNT", account)
+            startActivity(intent)
+        }
+
+        // ============================================
+        // 设置按钮 → 跳转到设置页面
+        // ============================================
+        btnSetting.setOnClickListener {
+            val intent = Intent(this, SettingActivity::class.java)
             startActivity(intent)
         }
 

@@ -70,8 +70,23 @@
         android:layout_marginTop="@dimen/dp_10"
         android:backgroundTint="@color/colorGreen"
         android:textColor="@color/white"
-        xmlns:app2="http://schemas.android.com/apk/res-auto"
-        app2:cornerRadius="12dp" />
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cornerRadius="12dp" />
+
+    <!-- ============================================ -->
+    <!-- 设置按钮（灰蓝色）                           -->
+    <!-- 点击后跳转到设置页面                         -->
+    <!-- ============================================ -->
+    <Button
+        android:id="@+id/btn_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="设置"
+        android:layout_marginTop="@dimen/dp_10"
+        android:backgroundTint="@color/colorGray"
+        android:textColor="@color/white"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cornerRadius="12dp" />
 
     <!-- ============================================ -->
     <!-- 图片展示区域                                 -->

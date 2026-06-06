@@ -90,6 +90,15 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <!-- 设置页面 -->
+        <!-- android:exported=false 不允许外部调用（仅APP内部跳转） -->
+        <activity
+            android:name=".SettingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication"
+            android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
 </manifest>

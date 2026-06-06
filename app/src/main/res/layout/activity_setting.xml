@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================ -->
+<!-- 设置页面布局：自动登录开关 + 退出登录按钮     -->
+<!-- Switch = 开关控件，像手机设置里的开关一样      -->
+<!-- ============================================ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_20"
+    android:background="@color/bg_page">
+
+    <!-- ============================================ -->
+    <!-- 顶部栏：返回按钮 + 标题                      -->
+    <!-- ============================================ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- 返回按钮 -->
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="←"
+            android:textSize="@dimen/text_22"
+            android:textColor="@color/text_black"
+            android:background="@android:color/transparent"
+            android:padding="0dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp" />
+
+        <!-- 页面标题 -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="应用设置"
+            android:textSize="@dimen/text_25"
+            android:textStyle="bold"
+            android:textColor="@color/text_black"
+            android:gravity="center"
+            android:layout_marginEnd="40dp" />
+
+    </LinearLayout>
+
+    <!-- ============================================ -->
+    <!-- 自动登录开关区域                              -->
+    <!-- 一行放"文字+开关"，用横向LinearLayout         -->
+    <!-- ============================================ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/dp_30"
+        android:background="@color/bg_card"
+        android:padding="@dimen/dp_16">
+
+        <!-- 开关左边的文字说明 -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="自动登录"
+            android:textSize="@dimen/text_18"
+            android:textColor="@color/text_black" />
+
+        <!--
+            Switch = 开关控件
+            isChecked：当前开关状态（true=开，false=关）
+            thumbTint：滑块颜色
+            trackTint：轨道颜色
+        -->
+        <Switch
+            android:id="@+id/switch_auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:thumbTint="@color/colorPrimary"
+            android:trackTint="@color/colorGray" />
+
+    </LinearLayout>
+
+    <!-- 开关下方的提示文字 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开启后，下次打开APP将自动登录，无需输入账号密码"
+        android:textSize="@dimen/text_12"
+        android:textColor="@color/text_hint"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginStart="@dimen/dp_4" />
+
+    <!-- ============================================ -->
+    <!-- 退出登录按钮（红色 + 圆角）                  -->
+    <!-- ============================================ -->
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="退出登录"
+        android:layout_marginTop="@dimen/dp_30"
+        android:backgroundTint="@color/colorRed"
+        android:textColor="@color/white"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cornerRadius="12dp" />
+
+</LinearLayout>
