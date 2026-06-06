@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 修改密码页面布局：ConstraintLayout约束布局，风格与其他页面统一 -->
+<!-- 修改密码页面布局：ConstraintLayout约束布局 -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,67 +11,84 @@
     tools:context=".ChangePwdActivity">
 
     <!--
-        旧密码输入框
-        hint        = 输入框为空时显示的灰色提示文字
-        inputType   = textPassword 输入内容显示成小圆点
-        padding     = 内边距12dp
-        constraintWidth_percent = 宽度占父布局的90%
+        旧密码输入框（带密码显示/隐藏切换）
     -->
-    <EditText
-        android:id="@+id/et_old_pwd"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_old_pwd"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="请输入旧密码"
-        android:inputType="textPassword"
-        android:padding="12dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:endIconMode="password_toggle"
+        app:hintEnabled="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.9"
-        android:layout_marginTop="120dp" />
+        android:layout_marginTop="120dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_old_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入旧密码"
+            android:inputType="textPassword"
+            android:padding="12dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!--
-        新密码输入框
-        inputType   = textPassword 输入内容显示成小圆点
-        maxLength   = 最多12个字符
+        新密码输入框（带密码显示/隐藏切换）
     -->
-    <EditText
-        android:id="@+id/et_new_pwd"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_new_pwd"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="请输入新密码"
-        android:inputType="textPassword"
-        android:maxLength="12"
-        android:padding="12dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_old_pwd"
+        app:endIconMode="password_toggle"
+        app:hintEnabled="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_old_pwd"
         app:layout_constraintWidth_percent="0.9"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_new_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入新密码"
+            android:inputType="textPassword"
+            android:maxLength="12"
+            android:padding="12dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!--
-        确认新密码输入框
-        inputType   = textPassword 输入内容显示成小圆点
-        maxLength   = 最多12个字符
+        确认新密码输入框（带密码显示/隐藏切换）
     -->
-    <EditText
-        android:id="@+id/et_new_pwd2"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_new_pwd2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="请确认新密码"
-        android:inputType="textPassword"
-        android:maxLength="12"
-        android:padding="12dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_new_pwd"
+        app:endIconMode="password_toggle"
+        app:hintEnabled="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_new_pwd"
         app:layout_constraintWidth_percent="0.9"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_new_pwd2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请确认新密码"
+            android:inputType="textPassword"
+            android:maxLength="12"
+            android:padding="12dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!--
         确认修改按钮
-        backgroundTint  = 橙色#FF9800（修改密码用橙色区分其他按钮）
-        cornerRadius    = 圆角12dp，与其他按钮风格统一
     -->
     <Button
         android:id="@+id/btn_confirm"
@@ -82,9 +99,9 @@
         android:textColor="#FFFFFF"
         android:padding="12dp"
         app:cornerRadius="12dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_new_pwd2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_new_pwd2"
         app:layout_constraintWidth_percent="0.9"
         android:layout_marginTop="30dp" />
 

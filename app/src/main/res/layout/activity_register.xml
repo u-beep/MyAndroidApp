@@ -3,6 +3,7 @@
 <!-- ScrollView：内容超出屏幕时可以上下滑动 -->
 <!-- 规则：ScrollView内部只能有一个直接子布局 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -27,34 +28,49 @@
             android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" />
 
         <!--
-            注册密码输入框
-            inputType = textPassword 输入内容显示成小圆点
-            maxLength = 最多12个字符
+            注册密码输入框（带密码显示/隐藏切换）
+            TextInputLayout + endIconMode="password_toggle"
         -->
-        <EditText
-            android:id="@+id/et_pwd"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_pwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="请输入密码"
-            android:inputType="textPassword"
-            android:maxLength="12"
-            android:padding="12dp"
-            android:layout_marginTop="10dp" />
+            app:endIconMode="password_toggle"
+            app:hintEnabled="false"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入密码"
+                android:inputType="textPassword"
+                android:maxLength="12"
+                android:padding="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!--
-            确认密码输入框
-            inputType = textPassword 输入内容显示成小圆点
-            maxLength = 最多12个字符
+            确认密码输入框（带密码显示/隐藏切换）
         -->
-        <EditText
-            android:id="@+id/et_pwd2"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_pwd2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="请确认密码"
-            android:inputType="textPassword"
-            android:maxLength="12"
-            android:padding="12dp"
-            android:layout_marginTop="10dp" />
+            app:endIconMode="password_toggle"
+            app:hintEnabled="false"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_pwd2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请确认密码"
+                android:inputType="textPassword"
+                android:maxLength="12"
+                android:padding="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!--
             性别单选（RadioGroup + RadioButton）

@@ -75,24 +75,32 @@
         android:layout_marginTop="30dp" />
 
     <!--
-        密码输入框
-        约束方式：水平铺满 + 在账号框下面
-        constraintStart/End = 左右贴着parent → 水平铺满
-        constraintTop = 顶部贴着账号框底部
-        marginTop = 距离账号框10dp
+        密码输入框（带密码显示/隐藏切换）
+        TextInputLayout：Material Design 输入框容器，支持尾部图标
+        endIconMode="password_toggle"：自动显示眼睛图标，点击切换密码显示/隐藏
+        TextInputEditText：放在 TextInputLayout 里面的输入框
     -->
-    <EditText
-        android:id="@+id/et_pwd"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_pwd"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="请输入密码"
-        android:inputType="textPassword"
-        android:maxLength="12"
-        android:padding="12dp"
+        app:endIconMode="password_toggle"
+        app:hintEnabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_account"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入密码"
+            android:inputType="textPassword"
+            android:maxLength="12"
+            android:padding="12dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!--
         记住密码勾选框
@@ -108,7 +116,7 @@
         android:text="记住密码"
         android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_pwd"
+        app:layout_constraintTop_toBottomOf="@id/til_pwd"
         android:layout_marginTop="10dp" />
 
     <!--
