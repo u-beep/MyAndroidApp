@@ -12,6 +12,12 @@ import android.widget.EditText
 import android.widget.ProgressBar
 // RadioGroup：单选分组容器
 import android.widget.RadioGroup
+// Spinner：下拉选择框控件
+import android.widget.Spinner
+// ArrayAdapter：数组适配器，把数组和Spinner连接起来
+import android.widget.ArrayAdapter
+// AdapterView：Spinner的父类，用于选中事件监听
+import android.widget.AdapterView
 // Toast：弹出的短暂提示消息
 import android.widget.Toast
 // View：控件基类，用于控制显示/隐藏
@@ -48,6 +54,54 @@ class RegisterActivity : AppCompatActivity() {
         val cbBook = findViewById<CheckBox>(R.id.cb_book)             // 爱好：看书
         val cbGame = findViewById<CheckBox>(R.id.cb_game)             // 爱好：玩游戏
         val loading = findViewById<ProgressBar>(R.id.loading)         // 加载进度条
+        val spCity = findViewById<Spinner>(R.id.sp_city)             // 城市下拉选择
+
+        // ============================================
+        // Spinner 城市下拉选择绑定
+        //
+        // Spinner = 下拉选择框，像网页上的下拉菜单
+        // ArrayAdapter = 适配器，把数组和Spinner连接起来
+        //
+        // 流程：
+        //   1. 定义城市数组（数据源）
+        //   2. 创建 ArrayAdapter（桥梁：数据 → 控件）
+        //   3. 把适配器设置给 Spinner
+        //   4. 监听选中事件，获取用户选择的城市
+        // ============================================
+
+        // 1. 定义城市数组（数据源）
+        val cityArr = arrayOf("北京", "上海", "广州", "深圳", "杭州", "成都", "重庆")
+
+        // 默认选中第一个城市
+        var selectCity = cityArr[0]
+
+        // 2. 创建 ArrayAdapter 适配器
+        //   第1个参数 this = 上下文
+        //   第2个参数 android.R.layout.simple_spinner_dropdown_item = 系统自带的下拉样式
+        //   第3个参数 cityArr = 数据源数组
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            cityArr
+        )
+
+        // 3. 把适配器设置给 Spinner
+        spCity.adapter = adapter
+
+        // 4. 监听选中事件
+        // onItemSelectedListener：当用户选择某一项时触发
+        //   onItemSelected：选中某项时调用，pos就是选中项的位置
+        //   onNothingSelected：没有选中时调用（一般用不到，但要空实现）
+        spCity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, pos: Int, id: Long) {
+                // 根据选中位置，从数组中取出城市名
+                selectCity = cityArr[pos]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // 没有选中任何项时调用（一般不需要处理）
+            }
+        }
 
         // ============================================
         // 点击注册按钮
@@ -113,7 +167,7 @@ class RegisterActivity : AppCompatActivity() {
             //   - 这样就自动防重复了，不需要单独判断账号是否存在
             // --------------------------------------------
             val userDao = UserDao(this)
-            val isSuccess = userDao.addUser(account, pwd, sex, hobby)
+            val isSuccess = userDao.addUser(account, pwd, sex, hobby, selectCity)
 
             if (isSuccess) {
                 // 注册成功

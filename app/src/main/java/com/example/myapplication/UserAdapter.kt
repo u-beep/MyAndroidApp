@@ -52,10 +52,11 @@ class UserAdapter(var list: MutableList<User>) : RecyclerView.Adapter<UserAdapte
      *   - 这样滚动非常流畅，不卡顿
      */
     inner class UserVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // 在ViewHolder创建时，就把三个TextView找出来缓存
+        // 在ViewHolder创建时，就把所有TextView找出来缓存
         val tvAcc: TextView = itemView.findViewById(R.id.tv_acc)       // 账号
         val tvSex: TextView = itemView.findViewById(R.id.tv_sex)       // 性别
         val tvHobby: TextView = itemView.findViewById(R.id.tv_hobby)   // 爱好
+        val tvCity: TextView = itemView.findViewById(R.id.tv_city)     // 城市
     }
 
     /**
@@ -95,6 +96,7 @@ class UserAdapter(var list: MutableList<User>) : RecyclerView.Adapter<UserAdapte
         holder.tvAcc.text = "账号：${user.account}"     // 例如"账号：zhangsan"
         holder.tvSex.text = "性别：${user.sex}"         // 例如"性别：男"
         holder.tvHobby.text = "爱好：${user.hobby}"     // 例如"爱好：篮球 看书"
+        holder.tvCity.text = "城市：${user.city}"       // 例如"城市：北京"
 
         // ============================================
         // 条目点击事件

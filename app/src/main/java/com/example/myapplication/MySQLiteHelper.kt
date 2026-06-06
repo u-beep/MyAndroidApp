@@ -31,7 +31,7 @@ class MySQLiteHelper(context: Context) : SQLiteOpenHelper(
     context,
     "user_db.db",   // 数据库文件名
     null,            // 游标工厂，传null用默认
-    1                // 数据库版本号，从1开始
+    2                // 数据库版本号，从1升到2，触发onUpgrade升级
 ) {
 
     /**
@@ -71,7 +71,8 @@ class MySQLiteHelper(context: Context) : SQLiteOpenHelper(
                 account TEXT UNIQUE,
                 pwd TEXT,
                 sex TEXT,
-                hobby TEXT
+                hobby TEXT,
+                city TEXT
             )
         """.trimIndent()
 
@@ -95,7 +96,19 @@ class MySQLiteHelper(context: Context) : SQLiteOpenHelper(
      * @param newVersion 新版本号
      */
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        // 暂时不需要升级，留空
-        // 未来如果需要加新表或新列，在这里写ALTER TABLE语句
+        // ============================================
+        // 数据库版本升级逻辑
+        //
+        // 当版本号从1升到2时，给已有表新增city列
+        // ALTER TABLE = 修改表结构
+        // ADD COLUMN = 新增一列
+        //
+        // 为什么用if判断oldVersion？
+        //   因为用户可能从版本1直接升到版本3
+        //   每个版本的升级逻辑都要依次执行
+        // ============================================
+        if (oldVersion == 1) {
+            db?.execSQL("ALTER TABLE user_table ADD COLUMN city TEXT")
+        }
     }
 }

@@ -57,15 +57,17 @@ class UserDao(context: Context) {
      * @param pwd     密码
      * @param sex     性别
      * @param hobby   爱好
+     * @param city    所在城市
      * @return true=注册成功，false=注册失败（账号重复等）
      */
-    fun addUser(account: String, pwd: String, sex: String, hobby: String): Boolean {
+    fun addUser(account: String, pwd: String, sex: String, hobby: String, city: String): Boolean {
         // ContentValues：键值对容器，key=列名，value=要存的数据
         val cv = ContentValues()
         cv.put("account", account)  // 第1列：账号
         cv.put("pwd", pwd)          // 第2列：密码
         cv.put("sex", sex)          // 第3列：性别
         cv.put("hobby", hobby)      // 第4列：爱好
+        cv.put("city", city)        // 第5列：城市
 
         // db.insert(表名, 空列占位, 数据)
         //   第1个参数："user_table" = 表名
@@ -154,8 +156,9 @@ class UserDao(context: Context) {
             val pwd = cursor.getString(cursor.getColumnIndexOrThrow("pwd"))
             val sex = cursor.getString(cursor.getColumnIndexOrThrow("sex"))
             val hobby = cursor.getString(cursor.getColumnIndexOrThrow("hobby"))
+            val city = cursor.getString(cursor.getColumnIndexOrThrow("city"))
             cursor.close()
-            return User(acc, pwd, sex, hobby)
+            return User(acc, pwd, sex, hobby, city)
         }
 
         cursor.close()
@@ -182,14 +185,15 @@ class UserDao(context: Context) {
         // while循环遍历所有行
         while (cursor.moveToNext()) {
             // 按列索引取出各字段
-            // 索引对应建表时的顺序：0=id, 1=account, 2=pwd, 3=sex, 4=hobby
+            // 索引对应建表时的顺序：0=id, 1=account, 2=pwd, 3=sex, 4=hobby, 5=city
             val account = cursor.getString(1)   // 第1列：account
             val pwd = cursor.getString(2)       // 第2列：pwd
             val sex = cursor.getString(3)       // 第3列：sex
             val hobby = cursor.getString(4)     // 第4列：hobby
+            val city = cursor.getString(5)      // 第5列：city
 
             // 封装成User对象，加入列表
-            list.add(User(account, pwd, sex, hobby))
+            list.add(User(account, pwd, sex, hobby, city))
         }
 
         cursor.close()

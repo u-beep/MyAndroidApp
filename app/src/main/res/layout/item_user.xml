@@ -39,4 +39,13 @@
         android:textColor="@color/text_gray"
         android:layout_marginTop="@dimen/dp_4" />
 
+    <!-- 城市文字 -->
+    <TextView
+        android:id="@+id/tv_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_15"
+        android:textColor="@color/text_gray"
+        android:layout_marginTop="@dimen/dp_4" />
+
 </LinearLayout>

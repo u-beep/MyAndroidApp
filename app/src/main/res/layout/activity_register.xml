@@ -109,6 +109,31 @@
             android:layout_height="wrap_content"
             android:text="玩游戏" />
 
+        <!-- ============================================ -->
+        <!-- 城市下拉选择（Spinner）                       -->
+        <!-- Spinner：点击弹出列表，单选一个选项           -->
+        <!-- 常用于选择城市、性别、学历等固定选项          -->
+        <!-- ============================================ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择城市："
+            android:textSize="@dimen/text_16"
+            android:textColor="@color/text_black"
+            android:layout_marginTop="@dimen/dp_15" />
+
+        <!--
+            Spinner = 下拉选择框
+            点击后弹出列表让用户选择一项
+            数据源通过代码中的 ArrayAdapter 绑定
+        -->
+        <Spinner
+            android:id="@+id/sp_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_5"
+            android:padding="@dimen/dp_12" />
+
         <!-- 注册按钮（用 MyButton 样式简化） -->
         <Button
             android:id="@+id/btn_register"

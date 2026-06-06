@@ -106,11 +106,11 @@ class MainActivity : AppCompatActivity() {
         val userDao = UserDao(this)
 
         // ============================================
-        // 从数据库读取当前用户的性别和爱好
+        // 从数据库读取当前用户的性别、爱好和城市
         // ============================================
         val currentUser = userDao.getUserByAccount(account)
         if (currentUser != null) {
-            tvInfo.text = "性别：${currentUser.sex}  爱好：${currentUser.hobby}"
+            tvInfo.text = "性别：${currentUser.sex}  爱好：${currentUser.hobby}  城市：${currentUser.city}"
         }
 
         // ============================================
