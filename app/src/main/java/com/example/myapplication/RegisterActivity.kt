@@ -21,12 +21,12 @@ import androidx.appcompat.app.AppCompatActivity
 
 /**
  * 注册页面 Activity
- * 功能：注册新账号 + 密码确认 + 性别单选 + 爱好多选 + 保存到本地
+ * 功能：注册新账号 + 密码确认 + 性别单选 + 爱好多选 + 保存到数据库
  *
  * 核心思路：
- *   用 SharedPreferences 存所有注册的用户信息
- *   key = 账号名
- *   value = "密码|性别|爱好"（用 | 拼接，读取时按 | 切割）
+ *   使用 SQLite 数据库存储用户信息
+ *   每个用户一条记录：account、pwd、sex、hobby 四个字段
+ *   通过 UserDao 操作数据库（增删改查）
  */
 class RegisterActivity : AppCompatActivity() {
 
@@ -106,34 +106,30 @@ class RegisterActivity : AppCompatActivity() {
             if (hobby.isEmpty()) hobby = "无"
 
             // --------------------------------------------
-            // 第5步：判断账号是否已存在
+            // 第5步+第6步：通过数据库保存用户信息（核心！）
+            // 使用 UserDao 操作数据库
+            // addUser()：插入一条新用户记录
+            //   - 如果账号已存在（account列UNIQUE），insert会失败返回-1
+            //   - 这样就自动防重复了，不需要单独判断账号是否存在
             // --------------------------------------------
-            val sp = getSharedPreferences("USER_LIST", MODE_PRIVATE)
-            if (sp.contains(account)) {
+            val userDao = UserDao(this)
+            val isSuccess = userDao.addUser(account, pwd, sex, hobby)
+
+            if (isSuccess) {
+                // 注册成功
+                Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show()
+
+                // --------------------------------------------
+                // 第7步：跳回登录页
+                // finish()：关闭当前注册页，自动回到登录页
+                // --------------------------------------------
+                finish()
+            } else {
+                // 注册失败（通常是账号已存在）
                 Toast.makeText(this, "账号已存在", Toast.LENGTH_SHORT).show()
                 loading.visibility = View.GONE
                 btnRegister.isEnabled = true
-                return@setOnClickListener
             }
-
-            // --------------------------------------------
-            // 第6步：保存用户信息（核心！）
-            // 格式："密码|性别|爱好"，用 | 拼接
-            // 读取时按 | 切割就能分别拿到密码、性别、爱好
-            // 例如："123456|男|篮球 看书"
-            // --------------------------------------------
-            val saveStr = "$pwd|$sex|$hobby"
-            val editor = sp.edit()
-            editor.putString(account, saveStr)      // 把"账号→密码|性别|爱好"存进去
-            editor.apply()                          // apply()：异步保存，不会卡界面
-
-            Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show()
-
-            // --------------------------------------------
-            // 第7步：跳回登录页
-            // finish()：关闭当前注册页，自动回到登录页
-            // --------------------------------------------
-            finish()
         }
     }
 }

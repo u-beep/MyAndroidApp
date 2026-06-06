@@ -22,6 +22,10 @@ import androidx.appcompat.app.AppCompatActivity
 /**
  * 登录页面 Activity
  * 功能：输入账号密码登录 + 记住密码（SharedPreferences本地存储）
+ *
+ * 注意：
+ *   - 登录验证改用 SQLite 数据库（UserDao）
+ *   - 记住密码仍用 SharedPreferences（因为只存一条键值对，SP更方便）
  */
 class LoginActivity : AppCompatActivity() {
 
@@ -108,22 +112,24 @@ class LoginActivity : AppCompatActivity() {
 
             // --------------------------------------------
             // 判断账号密码是否正确
-            // 存储格式："密码|性别|爱好"
+            // 改用数据库查询（UserDao）
+            // userDao.login(account)：根据账号查密码
+            //   返回null = 账号不存在
+            //   返回密码字符串 = 查到了，再和用户输入的对比
             // --------------------------------------------
-            val spUserList = getSharedPreferences("USER_LIST", MODE_PRIVATE)
-            val userData = spUserList.getString(account, "")
+            val userDao = UserDao(this)
+            val realPwd = userDao.login(account)
 
-            if (userData.isNullOrEmpty()) {
+            if (realPwd == null) {
+                // 账号不存在
                 Toast.makeText(this, "账号或密码错误", Toast.LENGTH_SHORT).show()
                 loading.visibility = View.GONE
                 btnLogin.isEnabled = true
                 return@setOnClickListener
             }
 
-            val arr = userData.split("\\|".toRegex())
-            val realPwd = arr[0]
-
             if (realPwd != pwd) {
+                // 密码不对
                 Toast.makeText(this, "账号或密码错误", Toast.LENGTH_SHORT).show()
                 loading.visibility = View.GONE
                 btnLogin.isEnabled = true
@@ -204,8 +210,9 @@ class LoginActivity : AppCompatActivity() {
 
             // 检查这个账号是否已经注册过
             // 没注册的账号不能修改密码
-            val spUserList = getSharedPreferences("USER_LIST", MODE_PRIVATE)
-            if (!spUserList.contains(account)) {
+            // 改用数据库查询：login()返回null说明账号不存在
+            val userDao = UserDao(this)
+            if (userDao.login(account) == null) {
                 Toast.makeText(this, "该账号未注册", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
