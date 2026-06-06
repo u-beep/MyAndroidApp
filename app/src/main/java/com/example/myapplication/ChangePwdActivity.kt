@@ -75,12 +75,22 @@ class ChangePwdActivity : AppCompatActivity() {
 
             // --------------------------------------------
             // 第3步：验证旧密码是否正确（核心！安全关键）
-            // 拿着账号名去 USER_LIST 里查真实的旧密码
-            // 如果输入的旧密码和存储的不一样 → 拒绝修改
+            // 存储格式："密码|性别|爱好"
+            // 需要先取出完整字符串，按 | 切割，取第一段作为密码
             // --------------------------------------------
             val sp = getSharedPreferences("USER_LIST", MODE_PRIVATE)
-            // getString(currentAccount, "")：用当前账号名查密码
-            val realOldPwd = sp.getString(currentAccount, "")
+            // getString(currentAccount, "")：用当前账号名查存储的数据
+            val userData = sp.getString(currentAccount, "")
+
+            if (userData.isNullOrEmpty()) {
+                Toast.makeText(this, "账号异常！", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // 按 | 切割字符串
+            // arr[0] = 密码，arr[1] = 性别，arr[2] = 爱好
+            val arr = userData.split("\\|".toRegex())
+            val realOldPwd = arr[0]     // 第一段就是旧密码
 
             if (oldPwd != realOldPwd) {
                 Toast.makeText(this, "旧密码错误！", Toast.LENGTH_SHORT).show()
@@ -88,14 +98,16 @@ class ChangePwdActivity : AppCompatActivity() {
             }
 
             // --------------------------------------------
-            // 第4步：保存新密码（核心！覆盖旧密码）
-            // putString(currentAccount, newPwd)：
-            //   同一个key，再put一次就会覆盖原来的值
-            //   所以旧密码就被新密码替换了！
+            // 第4步：保存新密码（核心！只替换密码，保留性别爱好）
+            // 重新拼接："新密码|性别|爱好"
             // --------------------------------------------
+            val sex = if (arr.size > 1) arr[1] else "男"
+            val hobby = if (arr.size > 2) arr[2] else "无"
+            val newSaveStr = "$newPwd|$sex|$hobby"
+
             val editor = sp.edit()
-            editor.putString(currentAccount, newPwd)    // 用新密码覆盖旧密码
-            editor.apply()                              // apply()：异步保存
+            editor.putString(currentAccount, newSaveStr)    // 用新数据覆盖旧数据
+            editor.apply()                                  // apply()：异步保存
 
             // --------------------------------------------
             // 第5步：清除"记住密码"缓存（重要！）

@@ -99,17 +99,28 @@ class LoginActivity : AppCompatActivity() {
 
             // --------------------------------------------
             // 判断账号密码是否正确
-            // 旧方式：硬编码 admin/123456（只能一个账号）
-            // 新方式：从 USER_LIST 中查找注册过的账号密码
+            // 存储格式变了："密码|性别|爱好"
+            // 需要先取出完整字符串，按 | 切割，取第一段作为密码
             // --------------------------------------------
 
             // 获取所有注册的账号（和注册页用的是同一个文件 "USER_LIST"）
             val spUserList = getSharedPreferences("USER_LIST", MODE_PRIVATE)
 
-            // getString(account, "no")：用账号名去查密码
-            //   第1个参数 account = 用户输入的账号（当key用）
-            //   第2个参数 "no" = 如果找不到这个账号，返回默认值"no"
-            val realPwd = spUserList.getString(account, "no")
+            // getString(account, "")：用账号名去查存储的数据
+            //   存储格式："密码|性别|爱好"，例如 "123456|男|篮球 看书"
+            val userData = spUserList.getString(account, "")
+
+            // 如果找不到这个账号，说明没注册过
+            if (userData.isNullOrEmpty()) {
+                Toast.makeText(this, "账号或密码错误", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // 按 | 切割字符串，取出各部分
+            // split("\\|")：| 是正则特殊字符，要用 \\ 转义
+            // arr[0] = 密码，arr[1] = 性别，arr[2] = 爱好
+            val arr = userData.split("\\|".toRegex())
+            val realPwd = arr[0]     // 第一段就是密码
 
             // 如果查到的密码 和 用户输入的密码 不一样，就是错误
             if (realPwd != pwd) {

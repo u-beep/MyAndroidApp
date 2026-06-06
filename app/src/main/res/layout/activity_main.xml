@@ -15,6 +15,15 @@
         android:text="欢迎登录成功！"
         android:textSize="24sp" />
 
+    <!-- 用户信息文字（性别、爱好） -->
+    <TextView
+        android:id="@+id/tv_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="#666666"
+        android:layout_marginTop="10dp" />
+
     <!-- 退出登录按钮（红色 + 点击变色 + 圆角） -->
     <Button
         android:id="@+id/btn_logout"

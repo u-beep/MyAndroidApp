@@ -1,91 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 注册页面布局：ConstraintLayout约束布局，风格与登录页统一 -->
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<!-- 注册页面布局：ScrollView滚动布局 + LinearLayout -->
+<!-- ScrollView：内容超出屏幕时可以上下滑动 -->
+<!-- 规则：ScrollView内部只能有一个直接子布局 -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="20dp"
-    tools:context=".RegisterActivity">
+    android:layout_height="match_parent">
 
-    <!--
-        注册账号输入框
-        hint        = 输入框为空时显示的灰色提示文字
-        digits      = 限制只能输入字母和数字
-        padding     = 内边距12dp
-        constraintWidth_percent = 宽度占父布局的90%
-    -->
-    <EditText
-        android:id="@+id/et_account"
-        android:layout_width="0dp"
+    <!-- 唯一一层子布局，所有内容放这里 -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入注册账号"
-        android:padding="12dp"
-        android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.9"
-        android:layout_marginTop="120dp" />
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <!--
-        注册密码输入框
-        inputType   = textPassword 输入内容显示成小圆点
-        maxLength   = 最多12个字符
-    -->
-    <EditText
-        android:id="@+id/et_pwd"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="请输入密码"
-        android:inputType="textPassword"
-        android:maxLength="12"
-        android:padding="12dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_account"
-        app:layout_constraintWidth_percent="0.9"
-        android:layout_marginTop="20dp" />
+        <!--
+            注册账号输入框
+            hint = 输入框为空时显示的灰色提示文字
+            digits = 限制只能输入字母和数字
+        -->
+        <EditText
+            android:id="@+id/et_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入注册账号"
+            android:padding="12dp"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" />
 
-    <!--
-        确认密码输入框
-        inputType   = textPassword 输入内容显示成小圆点
-        maxLength   = 最多12个字符
-    -->
-    <EditText
-        android:id="@+id/et_pwd2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="请确认密码"
-        android:inputType="textPassword"
-        android:maxLength="12"
-        android:padding="12dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_pwd"
-        app:layout_constraintWidth_percent="0.9"
-        android:layout_marginTop="20dp" />
+        <!--
+            注册密码输入框
+            inputType = textPassword 输入内容显示成小圆点
+            maxLength = 最多12个字符
+        -->
+        <EditText
+            android:id="@+id/et_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入密码"
+            android:inputType="textPassword"
+            android:maxLength="12"
+            android:padding="12dp"
+            android:layout_marginTop="10dp" />
 
-    <!--
-        完成注册按钮
-        backgroundTint  = 绿色#4CAF50（注册用绿色区分登录蓝色）
-        cornerRadius    = 圆角12dp，与登录按钮风格统一
-    -->
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="完成注册"
-        android:backgroundTint="#4CAF50"
-        android:textColor="#FFFFFF"
-        android:padding="12dp"
-        app:cornerRadius="12dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_pwd2"
-        app:layout_constraintWidth_percent="0.9"
-        android:layout_marginTop="30dp" />
+        <!--
+            确认密码输入框
+            inputType = textPassword 输入内容显示成小圆点
+            maxLength = 最多12个字符
+        -->
+        <EditText
+            android:id="@+id/et_pwd2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请确认密码"
+            android:inputType="textPassword"
+            android:maxLength="12"
+            android:padding="12dp"
+            android:layout_marginTop="10dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!--
+            性别单选（RadioGroup + RadioButton）
+            RadioGroup = 分组容器，一组里只能选一个
+            RadioButton = 单个选项
+            orientation = horizontal 横向排列
+        -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择性别："
+            android:textSize="16sp"
+            android:layout_marginTop="15dp" />
+
+        <RadioGroup
+            android:id="@+id/rg_sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+
+            <RadioButton
+                android:id="@+id/rb_man"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="男"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/rb_woman"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="女"
+                android:layout_marginStart="30dp" />
+        </RadioGroup>
+
+        <!--
+            爱好多选（CheckBox）
+            CheckBox = 独立使用，可以同时勾选多个
+        -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择爱好："
+            android:textSize="16sp"
+            android:layout_marginTop="15dp" />
+
+        <CheckBox
+            android:id="@+id/cb_ball"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="打篮球"
+            android:layout_marginTop="5dp" />
+
+        <CheckBox
+            android:id="@+id/cb_book"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="看书" />
+
+        <CheckBox
+            android:id="@+id/cb_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="玩游戏" />
+
+        <!--
+            完成注册按钮
+            backgroundTint = 绿色#4CAF50（注册用绿色区分登录蓝色）
+        -->
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="完成注册"
+            android:backgroundTint="#4CAF50"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:layout_marginTop="25dp" />
+
+    </LinearLayout>
+</ScrollView>
