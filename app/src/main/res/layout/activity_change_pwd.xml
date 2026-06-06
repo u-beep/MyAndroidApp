@@ -7,7 +7,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
+    android:padding="@dimen/dp_20"
     tools:context=".ChangePwdActivity">
 
     <!-- 旧密码（用 MyPasswordInput 样式简化） -->
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:hint="请输入旧密码"
             android:inputType="textPassword"
-            android:padding="12dp" />
+            android:padding="@dimen/dp_12" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -40,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_old_pwd"
         app:layout_constraintWidth_percent="0.9"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="@dimen/dp_20">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_new_pwd"
@@ -49,7 +49,7 @@
             android:hint="请输入新密码"
             android:inputType="textPassword"
             android:maxLength="12"
-            android:padding="12dp" />
+            android:padding="@dimen/dp_12" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,7 +62,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_new_pwd"
         app:layout_constraintWidth_percent="0.9"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="@dimen/dp_20">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_new_pwd2"
@@ -71,7 +71,7 @@
             android:hint="请确认新密码"
             android:inputType="textPassword"
             android:maxLength="12"
-            android:padding="12dp" />
+            android:padding="@dimen/dp_12" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,11 +81,11 @@
         style="@style/MyButton"
         android:layout_width="0dp"
         android:text="确认修改"
-        android:backgroundTint="#FF9800"
+        android:backgroundTint="@color/colorOrange"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_new_pwd2"
         app:layout_constraintWidth_percent="0.9"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="@dimen/dp_30" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

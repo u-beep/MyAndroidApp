@@ -7,7 +7,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
+    android:padding="@dimen/dp_20"
     tools:context=".LoginActivity">
 
     <!-- 头像（圆形） -->
@@ -22,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="@dimen/dp_30" />
 
     <!-- 标题 -->
     <TextView
@@ -30,12 +30,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="用户登录"
-        android:textSize="30sp"
+        android:textSize="@dimen/text_30"
         android:textStyle="bold"
+        android:textColor="@color/text_black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_head"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="@dimen/dp_20" />
 
     <!-- 账号输入框（用 Style 简化） -->
     <EditText
@@ -47,7 +48,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="@dimen/dp_30" />
 
     <!-- 密码输入框（用 MyPasswordInput 样式简化） -->
     <com.google.android.material.textfield.TextInputLayout
@@ -65,7 +66,7 @@
             android:hint="请输入密码"
             android:inputType="textPassword"
             android:maxLength="12"
-            android:padding="12dp" />
+            android:padding="@dimen/dp_12" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,9 +79,9 @@
         android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_pwd"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="@dimen/dp_10" />
 
-    <!-- 登录按钮（用 MyButton 样式简化） -->
+    <!-- 登录按钮 -->
     <Button
         android:id="@+id/btn_login"
         style="@style/MyButton"
@@ -90,7 +91,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cb_remember"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="@dimen/dp_20" />
 
     <!-- 去注册按钮 -->
     <Button
@@ -98,7 +99,7 @@
         style="@style/MyButton"
         android:layout_width="0dp"
         android:text="去注册"
-        android:backgroundTint="#9E9E9E"
+        android:backgroundTint="@color/colorGray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_login" />
@@ -109,16 +110,12 @@
         style="@style/MyButton"
         android:layout_width="0dp"
         android:text="修改密码"
-        android:backgroundTint="#FF9800"
+        android:backgroundTint="@color/colorOrange"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_to_register" />
 
-    <!--
-        加载动画（ProgressBar）
-        visibility="gone"：默认隐藏，登录时才显示
-        visibility="visible"：显示
-    -->
+    <!-- 加载动画 -->
     <ProgressBar
         android:id="@+id/loading"
         android:layout_width="40dp"
@@ -127,6 +124,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_to_change_pwd"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="@dimen/dp_15" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

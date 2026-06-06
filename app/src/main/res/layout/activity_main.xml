@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- ============================================ -->
-<!-- 主页布局：欢迎信息 + 用户信息 + 操作按钮    -->
-<!-- + RecyclerView列表展示所有注册用户           -->
-<!-- 使用LinearLayout纵向排列                     -->
+<!-- 主页布局：欢迎信息 + 用户信息 + 操作按钮     -->
+<!-- + RecyclerView列表展示所有注册用户            -->
+<!-- 使用LinearLayout纵向排列                      -->
 <!-- ============================================ -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="@dimen/dp_20">
 
     <!-- 欢迎文字 -->
     <TextView
@@ -17,46 +17,75 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="欢迎登录成功！"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textSize="@dimen/text_24"
+        android:textStyle="bold"
+        android:textColor="@color/text_black" />
 
     <!-- 用户信息文字（性别、爱好） -->
     <TextView
         android:id="@+id/tv_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="#666666"
-        android:layout_marginTop="10dp" />
+        android:textSize="@dimen/text_16"
+        android:textColor="@color/text_gray"
+        android:layout_marginTop="@dimen/dp_10" />
 
     <!-- ============================================ -->
-    <!-- 退出登录按钮（红色 + 点击变色 + 圆角）       -->
+    <!-- 退出登录按钮（红色 + 圆角）                  -->
     <!-- ============================================ -->
     <Button
         android:id="@+id/btn_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dp_20"
         android:text="退出登录"
-        android:backgroundTint="#E53935"
-        android:textColor="#FFFFFF"
+        android:backgroundTint="@color/colorRed"
+        android:textColor="@color/white"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:cornerRadius="12dp" />
 
     <!-- ============================================ -->
     <!-- 备忘录按钮（紫色）                           -->
-    <!-- 点击跳转到备忘录页面                         -->
     <!-- ============================================ -->
     <Button
         android:id="@+id/btn_memo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="备忘录"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="#9C27B0"
-        android:textColor="#FFFFFF"
+        android:layout_marginTop="@dimen/dp_10"
+        android:backgroundTint="@color/colorPurple"
+        android:textColor="@color/white"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:cornerRadius="12dp" />
+
+    <!-- ============================================ -->
+    <!-- 打开相册按钮（绿色）                         -->
+    <!-- 点击后申请存储权限，授权后打开系统相册        -->
+    <!-- ============================================ -->
+    <Button
+        android:id="@+id/btn_open_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="打开手机相册图片"
+        android:layout_marginTop="@dimen/dp_10"
+        android:backgroundTint="@color/colorGreen"
+        android:textColor="@color/white"
+        xmlns:app2="http://schemas.android.com/apk/res-auto"
+        app2:cornerRadius="12dp" />
+
+    <!-- ============================================ -->
+    <!-- 图片展示区域                                 -->
+    <!-- 从相册选择图片后，显示在这个ImageView中       -->
+    <!-- scaleType="centerCrop"：等比缩放填满，裁切多余部分 -->
+    <!-- ============================================ -->
+    <ImageView
+        android:id="@+id/iv_show"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="@dimen/dp_15"
+        android:scaleType="centerCrop"
+        android:background="@drawable/item_bg"
+        android:visibility="gone" />
 
     <!-- ============================================ -->
     <!-- 分隔标题：所有注册用户                       -->
@@ -65,17 +94,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="—— 所有注册用户 ——"
-        android:textSize="16sp"
-        android:textColor="#999999"
+        android:textSize="@dimen/text_16"
+        android:textColor="@color/text_hint"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_8" />
 
     <!-- ============================================ -->
     <!-- RecyclerView：列表容器                       -->
-    <!-- 承载所有用户信息条目                         -->
-    <!-- layout_height="0dp" + layout_weight="1"      -->
-    <!-- 让列表占据剩余所有空间                       -->
     <!-- ============================================ -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_user_list"

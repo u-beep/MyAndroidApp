@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================ -->
+<!-- 全局主题配置                                  -->
+<!-- parent：继承Material Components无标题栏主题   -->
+<!--   统一APP整体风格：颜色、背景、控件样式        -->
+<!-- ============================================ -->
 <resources>
 
-    <style name="Theme.MyApplication" parent="Theme.AppCompat.Light.NoActionBar" />
+    <style name="Theme.MyApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- 标题栏/主色调：决定顶部状态栏颜色、默认按钮色 -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <!-- 页面默认背景色：所有页面统一浅灰底 -->
+        <item name="android:windowBackground">@color/bg_page</item>
+        <!-- 控件默认着色：输入框下划线、CheckBox等强调色 -->
+        <item name="colorAccent">@color/colorOrange</item>
+        <!-- 状态栏颜色：和主色一致 -->
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+    </style>
+
 </resources>

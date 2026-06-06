@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================ -->
+<!-- 全局颜色资源文件                              -->
+<!-- 作用：所有颜色统一在这里定义                  -->
+<!--   使用方式：@color/colorPrimary              -->
+<!--   修改一处，全局生效！再也不用到处改#号了      -->
+<!-- ============================================ -->
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- ============================================ -->
+    <!-- 主题色（APP主色调，用于标题栏、主要按钮）     -->
+    <!-- ============================================ -->
+    <color name="colorPrimary">#2196F3</color>         <!-- 蓝色主色 -->
+    <color name="colorGreen">#4CAF50</color>            <!-- 绿色（注册成功等） -->
+    <color name="colorOrange">#FF9800</color>           <!-- 橙色（保存、修改等） -->
+    <color name="colorRed">#E53935</color>              <!-- 红色（退出、删除等） -->
+    <color name="colorPurple">#9C27B0</color>           <!-- 紫色（备忘录等） -->
+    <color name="colorGray">#9E9E9E</color>             <!-- 灰色（返回、取消等） -->
+
+    <!-- ============================================ -->
+    <!-- 基础色                                       -->
+    <!-- ============================================ -->
+    <color name="white">#FFFFFF</color>                 <!-- 白色 -->
+    <color name="black">#FF000000</color>               <!-- 黑色 -->
+
+    <!-- ============================================ -->
+    <!-- 背景色                                       -->
+    <!-- ============================================ -->
+    <color name="bg_page">#F5F5F5</color>               <!-- 页面底色（浅灰） -->
+    <color name="bg_card">#FFFFFF</color>                <!-- 卡片底色（白色） -->
+    <color name="bg_input">#F0F0F0</color>               <!-- 输入框底色 -->
+
+    <!-- ============================================ -->
+    <!-- 文字色                                       -->
+    <!-- ============================================ -->
+    <color name="text_black">#333333</color>             <!-- 正文黑色 -->
+    <color name="text_gray">#666666</color>              <!-- 次要灰色 -->
+    <color name="text_hint">#999999</color>              <!-- 提示浅灰 -->
 </resources>

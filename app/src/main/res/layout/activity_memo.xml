@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="@dimen/dp_20">
 
     <!-- ============================================ -->
     <!-- 标题栏：返回按钮 + 标题文字，横向排列        -->
@@ -23,11 +23,11 @@
         <Button
             android:id="@+id/btn_back"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/dp_40"
             android:text="← 返回"
-            android:backgroundTint="#9E9E9E"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
+            android:backgroundTint="@color/colorGray"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             app:cornerRadius="10dp" />
 
@@ -37,40 +37,40 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="我的备忘录"
-            android:textSize="22sp"
+            android:textSize="@dimen/text_22"
             android:textStyle="bold"
+            android:textColor="@color/text_black"
             android:gravity="center" />
 
         <!-- 右侧占位，保持标题居中 -->
         <View
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/dp_40"
             android:visibility="invisible" />
 
     </LinearLayout>
 
     <!-- ============================================ -->
     <!-- RecyclerView：备忘录列表容器                 -->
-    <!-- 占据大部分空间                               -->
     <!-- ============================================ -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_memo_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/dp_12"
         android:clipToPadding="false" />
 
-    <!-- 空数据提示（没有备忘录时显示） -->
+    <!-- 空数据提示 -->
     <TextView
         android:id="@+id/tv_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="还没有备忘录，点击下方按钮新建吧~"
-        android:textSize="16sp"
-        android:textColor="#999999"
+        android:textSize="@dimen/text_16"
+        android:textColor="@color/text_hint"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="@dimen/dp_40"
         android:visibility="gone" />
 
     <!-- ============================================ -->
@@ -81,10 +81,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="+ 新建备忘录"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="#FF9800"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:layout_marginTop="@dimen/dp_12"
+        android:backgroundTint="@color/colorOrange"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_16"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:cornerRadius="12dp" />
 

@@ -35,6 +35,14 @@ class UserAdapter(var list: MutableList<User>) : RecyclerView.Adapter<UserAdapte
     var itemClick: ((User) -> Unit)? = null
 
     /**
+     * 条目长按回调接口
+     * 用法：adapter.longClick = { user -> ... }
+     * 当用户长按某一条列表项时触发
+     * 用于弹出删除确认弹窗等操作
+     */
+    var longClick: ((User) -> Unit)? = null
+
+    /**
      * ViewHolder（视图持有者）
      * 作用：缓存一条条目中的所有控件，避免每次都findViewById
      *
@@ -95,6 +103,17 @@ class UserAdapter(var list: MutableList<User>) : RecyclerView.Adapter<UserAdapte
         // ============================================
         holder.itemView.setOnClickListener {
             itemClick?.invoke(user)
+        }
+
+        // ============================================
+        // 条目长按事件
+        // 长按条目触发longClick回调
+        // 用于弹出删除确认弹窗
+        // setOnLongClickListener返回true表示消费了长按事件
+        // ============================================
+        holder.itemView.setOnLongClickListener {
+            longClick?.invoke(user)
+            true
         }
     }
 

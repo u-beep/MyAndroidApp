@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================ -->
+<!-- 自定义删除确认弹窗布局                        -->
+<!-- 包含：提示文字 + 取消/确定按钮               -->
+<!-- 背景：白色圆角（dialog_bg.xml）               -->
+<!-- ============================================ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_20"
+    android:background="@drawable/dialog_bg">
+
+    <!-- ============================================ -->
+    <!-- 弹窗标题                                     -->
+    <!-- ============================================ -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="温馨提示"
+        android:textSize="@dimen/text_18"
+        android:textColor="@color/text_black"
+        android:textStyle="bold" />
+
+    <!-- ============================================ -->
+    <!-- 弹窗提示内容                                 -->
+    <!-- ============================================ -->
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="确定要删除该用户吗？"
+        android:textSize="@dimen/text_16"
+        android:textColor="@color/text_gray"
+        android:layout_marginTop="@dimen/dp_12" />
+
+    <!-- ============================================ -->
+    <!-- 按钮区域：取消 + 确定，横向排列              -->
+    <!-- ============================================ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp_20">
+
+        <!-- 取消按钮（灰色） -->
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="取消"
+            android:layout_marginRight="@dimen/dp_8"
+            android:backgroundTint="@color/colorGray"
+            android:textColor="@color/white"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:cornerRadius="10dp" />
+
+        <!-- 确定删除按钮（红色） -->
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="确定删除"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:backgroundTint="@color/colorRed"
+            android:textColor="@color/white"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:cornerRadius="10dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

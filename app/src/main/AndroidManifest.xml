@@ -3,6 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- ============================================ -->
+    <!-- 权限声明（在application标签上方）             -->
+    <!-- 普通权限：安装时自动授权，不用动态申请        -->
+    <!-- 危险权限：运行时弹窗让用户手动授权            -->
+    <!-- ============================================ -->
+
+    <!-- 读取外部存储（Android 6~12适用） -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!-- 写入外部存储（Android 6~12适用） -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- Android 13+读取图片专用权限（取代上面两个） -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+
+    <!-- ============================================ -->
     <!-- application：整个APP的全局配置，只能有一个      -->
     <!-- ============================================ -->
     <application

@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="@dimen/dp_20">
 
     <!-- ============================================ -->
     <!-- 标题栏：返回按钮 + 标题，横向排列            -->
@@ -22,11 +22,11 @@
         <Button
             android:id="@+id/btn_back"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/dp_40"
             android:text="← 返回"
-            android:backgroundTint="#9E9E9E"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
+            android:backgroundTint="@color/colorGray"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             app:cornerRadius="10dp" />
 
@@ -37,23 +37,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="编辑备忘录"
-            android:textSize="22sp"
+            android:textSize="@dimen/text_22"
             android:textStyle="bold"
+            android:textColor="@color/text_black"
             android:gravity="center" />
 
         <!-- 右侧占位，保持标题居中 -->
         <View
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/dp_40"
             android:visibility="invisible" />
 
     </LinearLayout>
 
     <!-- ============================================ -->
     <!-- 备忘录内容输入框                             -->
-    <!-- layout_height="0dp" + layout_weight="1"      -->
-    <!-- 占据大部分屏幕空间                           -->
-    <!-- gravity="top"：文字从顶部开始输入            -->
     <!-- ============================================ -->
     <EditText
         android:id="@+id/et_memo_content"
@@ -61,11 +59,11 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:hint="在这里输入笔记内容..."
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/dp_16"
         android:gravity="top"
-        android:padding="12dp"
-        android:background="#F0F0F0"
-        android:textSize="16sp" />
+        android:padding="@dimen/dp_12"
+        android:background="@color/bg_input"
+        android:textSize="@dimen/text_16" />
 
     <!-- ============================================ -->
     <!-- 保存按钮（橙色）                             -->
@@ -75,10 +73,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="保存"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="#FF9800"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:layout_marginTop="@dimen/dp_12"
+        android:backgroundTint="@color/colorOrange"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_16"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:cornerRadius="12dp" />
 
