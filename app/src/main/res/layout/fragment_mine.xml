@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================ -->
+<!-- 我的Fragment布局：备忘录+设置+相册+退出       -->
+<!-- ============================================ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_20"
+    android:background="@color/bg_page">
+
+    <!-- 标题 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我的"
+        android:textSize="@dimen/text_25"
+        android:textStyle="bold"
+        android:textColor="@color/text_black" />
+
+    <!-- 用户信息 -->
+    <TextView
+        android:id="@+id/tv_mine_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_16"
+        android:textColor="@color/text_gray"
+        android:layout_marginTop="@dimen/dp_10" />
+
+    <!-- 备忘录按钮（紫色） -->
+    <Button
+        android:id="@+id/btn_memo"
+        style="@style/MyButton"
+        android:text="备忘录"
+        android:backgroundTint="@color/colorPurple"
+        android:layout_marginTop="@dimen/dp_25" />
+
+    <!-- 设置按钮（灰色） -->
+    <Button
+        android:id="@+id/btn_setting"
+        style="@style/MyButton"
+        android:text="应用设置"
+        android:backgroundTint="@color/colorGray" />
+
+    <!-- 打开相册按钮（绿色） -->
+    <Button
+        android:id="@+id/btn_open_img"
+        style="@style/MyButton"
+        android:text="打开手机相册图片"
+        android:backgroundTint="@color/colorGreen" />
+
+    <!-- 退出登录按钮（红色） -->
+    <Button
+        android:id="@+id/btn_logout"
+        style="@style/MyButton"
+        android:text="退出登录"
+        android:backgroundTint="@color/colorRed" />
+
+</LinearLayout>

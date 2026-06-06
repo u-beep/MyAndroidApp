@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================ -->
+<!-- 底部导航文字颜色选择器                        -->
+<!-- checked=选中时蓝色，unchecked=未选中时灰色     -->
+<!-- ============================================ -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true" android:color="@color/colorPrimary" />
+    <item android:state_checked="false" android:color="@color/text_hint" />
+</selector>
