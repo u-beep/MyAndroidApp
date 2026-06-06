@@ -22,6 +22,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 // RecyclerView：列表控件
 import androidx.recyclerview.widget.RecyclerView
+// FrameLayout：层叠布局容器（宠物浮层）
+import android.widget.FrameLayout
+// WindowManager：获取屏幕尺寸
+import android.view.WindowManager
+// DisplayMetrics：屏幕尺寸信息
+import android.util.DisplayMetrics
 
 /**
  * 主页面 Activity
@@ -33,6 +39,7 @@ import androidx.recyclerview.widget.RecyclerView
  *   4. 退出登录功能
  *   5. 进入备忘录
  *   6. 打开手机相册图片（动态权限申请）
+ *   7. 互动小宠物（可拖动、点击说话）
  *
  * 权限申请流程：
  *   点击按钮 → 检查权限 → 有权限直接打开相册
@@ -76,6 +83,9 @@ class MainActivity : AppCompatActivity() {
 
     // 图片展示ImageView，选择图片后显示到这里
     private lateinit var ivShow: ImageView
+
+    // 互动小宠物
+    private lateinit var petView: PetView
 
     // onCreate：Activity创建时自动调用的方法
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -201,6 +211,38 @@ class MainActivity : AppCompatActivity() {
                 PermissionUtil.requestPerm(this, STORAGE_PERMS, REQ_STORAGE)
             }
         }
+
+        // ============================================
+        // 初始化互动小宠物 🐱
+        //
+        // 流程：
+        //   1. 创建 PetView 实例（自定义控件）
+        //   2. 添加到宠物容器（FrameLayout浮层）
+        //   3. 设置初始位置在左下角
+        //
+        // PetView 知识点：
+        //   - 自定义 View：继承 View，重写 onDraw 绘制
+        //   - onTouchEvent：处理触摸事件（点击+拖动）
+        //   - Handler.postDelayed：定时动画
+        // ============================================
+        val petContainer = findViewById<FrameLayout>(R.id.pet_container)
+        petView = PetView(this)
+        petContainer.addView(petView)
+
+        // 等布局加载完成后，设置宠物到左下角
+        petContainer.post {
+            val screenWidth = petContainer.width
+            val screenHeight = petContainer.height
+            // 左下角，留一点边距
+            petView.layout(
+                20,
+                screenHeight - petView.height - 20,
+                20 + petView.width,
+                screenHeight - 20
+            )
+            // 宠物打招呼
+            petView.showSpeech("喵~你好！")
+        }
     }
 
     // ============================================
@@ -282,5 +324,16 @@ class MainActivity : AppCompatActivity() {
         userList.clear()
         userList.addAll(userDao.getAllUser())
         userAdapter.notifyDataSetChanged()
+    }
+
+    // ============================================
+    // Activity销毁时，释放宠物资源
+    // 防止内存泄漏（Handler延时任务还在执行）
+    // ============================================
+    override fun onDestroy() {
+        super.onDestroy()
+        if (::petView.isInitialized) {
+            petView.release()
+        }
     }
 }

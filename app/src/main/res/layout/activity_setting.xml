@@ -94,6 +94,87 @@
         android:layout_marginStart="@dimen/dp_4" />
 
     <!-- ============================================ -->
+    <!-- 亮度调节区域                                 -->
+    <!-- SeekBar = 拖动条，像手机音量/亮度滑块一样    -->
+    <!-- android:max="100" → 最大值100（0~100）       -->
+    <!-- ============================================ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/dp_25"
+        android:background="@color/bg_card"
+        android:padding="@dimen/dp_16">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="屏幕亮度"
+            android:textSize="@dimen/text_18"
+            android:textColor="@color/text_black" />
+
+        <!--
+            SeekBar = 拖动条控件
+            max="100"：最大值100，范围0~100
+            progress：当前进度值（代码中动态设置）
+        -->
+        <SeekBar
+            android:id="@+id/seek_brightness"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:layout_marginTop="@dimen/dp_10" />
+
+        <!-- 实时显示百分比 -->
+        <TextView
+            android:id="@+id/tv_bright_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="当前：50%"
+            android:textSize="@dimen/text_14"
+            android:textColor="@color/text_hint"
+            android:layout_marginTop="@dimen/dp_5" />
+
+    </LinearLayout>
+
+    <!-- ============================================ -->
+    <!-- 音量调节区域                                 -->
+    <!-- 结构和亮度一样：标题 + SeekBar + 百分比文字  -->
+    <!-- ============================================ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/dp_25"
+        android:background="@color/bg_card"
+        android:padding="@dimen/dp_16">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="媒体音量"
+            android:textSize="@dimen/text_18"
+            android:textColor="@color/text_black" />
+
+        <SeekBar
+            android:id="@+id/seek_volume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:layout_marginTop="@dimen/dp_10" />
+
+        <TextView
+            android:id="@+id/tv_volume_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="当前：50%"
+            android:textSize="@dimen/text_14"
+            android:textColor="@color/text_hint"
+            android:layout_marginTop="@dimen/dp_5" />
+
+    </LinearLayout>
+
+    <!-- ============================================ -->
     <!-- 退出登录按钮（红色 + 圆角）                  -->
     <!-- ============================================ -->
     <Button

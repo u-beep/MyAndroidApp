@@ -156,7 +156,9 @@ class UserDao(context: Context) {
             val pwd = cursor.getString(cursor.getColumnIndexOrThrow("pwd"))
             val sex = cursor.getString(cursor.getColumnIndexOrThrow("sex"))
             val hobby = cursor.getString(cursor.getColumnIndexOrThrow("hobby"))
-            val city = cursor.getString(cursor.getColumnIndexOrThrow("city"))
+            // 安全读取city列：旧数据库可能没有该列，用getColumnIndex代替getColumnIndexOrThrow
+            val cityIndex = cursor.getColumnIndex("city")
+            val city = if (cityIndex >= 0) cursor.getString(cityIndex) ?: "" else ""
             cursor.close()
             return User(acc, pwd, sex, hobby, city)
         }
@@ -190,7 +192,9 @@ class UserDao(context: Context) {
             val pwd = cursor.getString(2)       // 第2列：pwd
             val sex = cursor.getString(3)       // 第3列：sex
             val hobby = cursor.getString(4)     // 第4列：hobby
-            val city = cursor.getString(5)      // 第5列：city
+            // 安全读取city列：旧数据库升级后可能该列值为null，或升级未生效
+            val cityIndex = cursor.getColumnIndex("city")
+            val city = if (cityIndex >= 0) cursor.getString(cityIndex) ?: "" else ""
 
             // 封装成User对象，加入列表
             list.add(User(account, pwd, sex, hobby, city))

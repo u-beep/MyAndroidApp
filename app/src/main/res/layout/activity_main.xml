@@ -4,7 +4,15 @@
 <!-- + RecyclerView列表展示所有注册用户            -->
 <!-- 使用LinearLayout纵向排列                      -->
 <!-- ============================================ -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- ============================================ -->
+<!-- FrameLayout：层叠布局，让宠物浮在内容上方    -->
+<!-- 像一叠卡片，后加的View盖在前面的View上面    -->
+<!-- ============================================ -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -126,3 +134,18 @@
         android:clipToPadding="false" />
 
 </LinearLayout>
+
+<!-- ============================================ -->
+<!-- 互动小宠物容器                               -->
+<!-- 放在FrameLayout的第二层，浮在内容上方        -->
+<!-- 初始位置在左下角，可拖动到任意位置           -->
+<!-- ============================================ -->
+<FrameLayout
+    android:id="@+id/pet_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+</FrameLayout>
+
+</FrameLayout>

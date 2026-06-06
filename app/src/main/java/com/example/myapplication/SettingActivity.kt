@@ -8,8 +8,12 @@ import android.content.SharedPreferences
 import android.os.Bundle
 // Button：按钮控件
 import android.widget.Button
+// SeekBar：拖动条控件（像手机音量/亮度滑块）
+import android.widget.SeekBar
 // Switch：开关控件（像手机设置里的开关）
 import android.widget.Switch
+// TextView：文字显示控件
+import android.widget.TextView
 // Toast：弹出的短暂提示消息
 import android.widget.Toast
 // AppCompatActivity：兼容低版本Android的Activity基类
@@ -20,13 +24,16 @@ import androidx.appcompat.app.AppCompatActivity
  *
  * 功能：
  *   1. 自动登录开关（Switch控件）
- *   2. 用 SharedPreferences 保存开关状态（永久保存）
- *   3. 退出登录（清除用户信息，回到登录页）
+ *   2. 亮度调节（SeekBar拖动条）
+ *   3. 音量调节（SeekBar拖动条）
+ *   4. 用 SharedPreferences 保存所有设置（永久保存）
+ *   5. 退出登录（清除用户信息，回到登录页）
  *
  * 知识点：
- *   - Switch = 开关控件，isChecked 属性获取/设置开关状态
- *   - setOnCheckedChangeListener = 开关状态改变时的监听器
- *   - SP 保存开关状态 → 下次打开页面时恢复开关状态
+ *   - Switch = 开关控件
+ *   - SeekBar = 拖动条控件，max设置最大值，progress获取当前进度
+ *   - OnSeekBarChangeListener = 拖动监听（三个回调方法）
+ *   - SP 保存设置 → 下次打开页面时恢复
  */
 class SettingActivity : AppCompatActivity() {
 
@@ -35,6 +42,14 @@ class SettingActivity : AppCompatActivity() {
 
     // Switch 开关控件引用
     lateinit var switchAuto: Switch
+
+    // 亮度 SeekBar + 百分比文字
+    lateinit var seekBrightness: SeekBar
+    lateinit var tvBrightValue: TextView
+
+    // 音量 SeekBar + 百分比文字
+    lateinit var seekVolume: SeekBar
+    lateinit var tvVolumeValue: TextView
 
     // onCreate：Activity创建时自动调用的方法
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,10 +62,13 @@ class SettingActivity : AppCompatActivity() {
         switchAuto = findViewById(R.id.switch_auto)
         val btnLogout = findViewById<Button>(R.id.btn_logout)
         val btnBack = findViewById<Button>(R.id.btn_back)
+        seekBrightness = findViewById(R.id.seek_brightness)
+        tvBrightValue = findViewById(R.id.tv_bright_value)
+        seekVolume = findViewById(R.id.seek_volume)
+        tvVolumeValue = findViewById(R.id.tv_volume_value)
 
         // ============================================
         // 返回按钮 → 关闭当前页面，回到主页
-        // finish()：关闭当前Activity，自动回到上一个页面
         // ============================================
         btnBack.setOnClickListener {
             finish()
@@ -58,31 +76,19 @@ class SettingActivity : AppCompatActivity() {
 
         // ============================================
         // 获取 SharedPreferences
-        // "SETTING" = 存储文件名（和登录页的"USER_DATA"分开）
-        // MODE_PRIVATE = 只有本APP能读写
         // ============================================
         sp = getSharedPreferences("SETTING", MODE_PRIVATE)
 
         // ============================================
-        // 读取保存的开关状态，恢复开关显示
-        //
-        // getBoolean("auto_login", false)：
-        //   第1个参数 = 键名（保存时用的名字）
-        //   第2个参数 = 默认值（如果没保存过，返回false）
+        // 1. 自动登录开关
         // ============================================
+
+        // 读取保存的开关状态，恢复开关显示
         switchAuto.isChecked = sp.getBoolean("auto_login", false)
 
-        // ============================================
         // 开关状态改变时的监听
-        //
-        // setOnCheckedChangeListener：开关状态改变时自动触发
-        //   button = 触发事件的Switch控件
-        //   isChecked = 新的开关状态（true=开，false=关）
-        // ============================================
         switchAuto.setOnCheckedChangeListener { button, isChecked ->
-            // 把开关状态保存到 SharedPreferences
-            // putBoolean("auto_login", isChecked)：保存键值对
-            // apply()：异步提交（不会卡住界面）
+            // 保存开关状态
             sp.edit().putBoolean("auto_login", isChecked).apply()
 
             // 根据开关状态显示不同的提示
@@ -94,13 +100,74 @@ class SettingActivity : AppCompatActivity() {
         }
 
         // ============================================
-        // 退出登录按钮
+        // 2. 亮度调节（SeekBar拖动条）
         //
-        // 流程：
-        //   1. 清除用户数据（账号、密码、记住密码标记）
-        //   2. 清除自动登录开关（否则退出后还会自动登录！）
-        //   3. 跳转回登录页
-        //   4. 关闭设置页
+        // SeekBar 使用流程：
+        //   1. 从 SP 读取保存的亮度值
+        //   2. 设置到 SeekBar 的 progress（当前进度）
+        //   3. 更新百分比文字显示
+        //   4. 监听拖动事件，实时更新 + 停止时保存
+        // ============================================
+
+        // 读取保存的亮度值，默认50
+        val brightness = sp.getInt("brightness", 50)
+        seekBrightness.progress = brightness
+        tvBrightValue.text = "当前：$brightness%"
+
+        // SeekBar 拖动监听
+        // OnSeekBarChangeListener：拖动条状态变化时自动触发
+        //   onProgressChanged → 拖动中实时回调（每次进度变化都触发）
+        //   onStartTrackingTouch → 手指按下拖动条时触发
+        //   onStopTrackingTouch → 手指松开拖动条时触发（保存数据的好时机）
+        seekBrightness.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                // 正在拖动 → 实时更新百分比文字
+                // progress = 当前进度值（0~100）
+                // fromUser = 是否是用户手动拖动（true=手动，false=代码设置）
+                tvBrightValue.text = "当前：$progress%"
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                // 手指按下拖动条 → 不需要处理
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                // 手指松开 → 保存当前亮度值到 SP
+                sp.edit().putInt("brightness", seekBar!!.progress).apply()
+                Toast.makeText(this@SettingActivity, "亮度已保存", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        // ============================================
+        // 3. 音量调节（SeekBar拖动条）
+        // 结构和亮度完全一样
+        // ============================================
+
+        // 读取保存的音量值，默认50
+        val volume = sp.getInt("volume", 50)
+        seekVolume.progress = volume
+        tvVolumeValue.text = "当前：$volume%"
+
+        // 音量 SeekBar 拖动监听
+        seekVolume.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                // 实时更新百分比
+                tvVolumeValue.text = "当前：$progress%"
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                // 手指按下 → 不处理
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                // 手指松开 → 保存音量值
+                sp.edit().putInt("volume", seekBar!!.progress).apply()
+                Toast.makeText(this@SettingActivity, "音量已保存", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        // ============================================
+        // 4. 退出登录按钮
         // ============================================
         btnLogout.setOnClickListener {
             // 清除用户登录信息
