@@ -81,8 +81,11 @@ class MineFragment : Fragment() {
         // 退出登录 → 跳回登录页
         // ============================================
         view.findViewById<Button>(R.id.btn_logout).setOnClickListener {
-            requireContext().getSharedPreferences("USER_DATA", android.content.Context.MODE_PRIVATE).edit().clear().apply()
-            requireContext().getSharedPreferences("SETTING", android.content.Context.MODE_PRIVATE).edit().putBoolean("auto_login", false).apply()
+            // 清除用户登录信息
+            com.example.myapplication.utils.SPUtil.remove(LoginActivity.KEY_ACCOUNT)
+            com.example.myapplication.utils.SPUtil.remove(LoginActivity.KEY_PWD)
+            // 关闭自动登录
+            com.example.myapplication.utils.SPUtil.putBoolean(LoginActivity.KEY_AUTO, false)
             startActivity(Intent(requireContext(), LoginActivity::class.java))
             activity?.finish()
         }

@@ -1,31 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================ -->
+<!-- 新增/编辑备忘录页面布局                       -->
+<!-- 包含：顶部栏（返回+标题）、标题输入、内容输入、保存按钮 -->
+<!-- ============================================ -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:background="@color/bg_page">
 
-    <!-- 标题输入框 -->
-    <EditText
-        android:id="@+id/et_title"
+    <!-- ============================================ -->
+    <!-- 顶部栏：返回按钮 + 页面标题                  -->
+    <!-- ============================================ -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入标题"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp_20">
 
-    <!-- 内容输入框 -->
-    <EditText
-        android:id="@+id/et_content"
+        <!-- 返回按钮 -->
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="←"
+            android:textSize="@dimen/text_22"
+            android:textColor="@color/text_black"
+            android:background="@android:color/transparent"
+            android:padding="0dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp" />
+
+        <!-- 页面标题 -->
+        <TextView
+            android:id="@+id/tv_page_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="新建备忘录"
+            android:textSize="@dimen/text_25"
+            android:textStyle="bold"
+            android:textColor="@color/text_black"
+            android:gravity="center"
+            android:layout_marginEnd="40dp" />
+
+    </LinearLayout>
+
+    <!-- ============================================ -->
+    <!-- 内容区域（卡片式白色背景）                    -->
+    <!-- ============================================ -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="150dp"
-        android:layout_marginTop="15dp"
-        android:hint="请输入备忘录内容"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:background="@color/bg_card"
+        android:padding="@dimen/dp_16">
 
-    <!-- 保存按钮 -->
+        <!-- 标题输入框 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="标题"
+            android:textSize="@dimen/text_14"
+            android:textColor="@color/text_hint" />
+
+        <EditText
+            android:id="@+id/et_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入备忘录标题"
+            android:textSize="@dimen/text_18"
+            android:textColor="@color/text_black"
+            android:textColorHint="@color/text_hint"
+            android:background="@android:color/transparent"
+            android:paddingTop="@dimen/dp_8"
+            android:paddingBottom="@dimen/dp_12"
+            android:singleLine="true" />
+
+        <!-- 分割线 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EEEEEE" />
+
+        <!-- 内容标签 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="内容"
+            android:textSize="@dimen/text_14"
+            android:textColor="@color/text_hint"
+            android:layout_marginTop="@dimen/dp_12" />
+
+        <!-- 内容输入框 -->
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:hint="请输入备忘录内容..."
+            android:textSize="@dimen/text_16"
+            android:textColor="@color/text_black"
+            android:textColorHint="@color/text_hint"
+            android:background="@android:color/transparent"
+            android:paddingTop="@dimen/dp_8"
+            android:gravity="top|start"
+            android:inputType="textMultiLine"
+            android:scrollbars="vertical" />
+
+    </LinearLayout>
+
+    <!-- ============================================ -->
+    <!-- 保存按钮                                     -->
+    <!-- ============================================ -->
     <Button
         android:id="@+id/btn_save"
+        style="@style/MyButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="保存备忘录"
-        android:layout_marginTop="25dp"/>
+        android:layout_margin="@dimen/dp_20"
+        android:backgroundTint="@color/colorPurple"
+        app:cornerRadius="12dp" />
+
 </LinearLayout>

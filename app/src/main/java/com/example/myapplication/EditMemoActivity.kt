@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.text.SimpleDateFormat
@@ -16,11 +17,14 @@ import java.util.*
  *   2. 编辑备忘录：从intent获取memo_id，查询并回填数据
  *   3. 保存按钮：根据是否有id判断是新增还是编辑
  *   4. 保存成功后自动返回列表页
+ *   5. 返回按钮：关闭当前页面返回列表
  */
 class EditMemoActivity : AppCompatActivity() {
     private lateinit var etTitle: EditText
     private lateinit var etContent: EditText
     private lateinit var btnSave: Button
+    private lateinit var btnBack: Button
+    private lateinit var tvPageTitle: TextView
     private val dao = MemoDao(this)
     private var editId: Long = -1L
 
@@ -31,17 +35,28 @@ class EditMemoActivity : AppCompatActivity() {
         etTitle = findViewById(R.id.et_title)
         etContent = findViewById(R.id.et_content)
         btnSave = findViewById(R.id.btn_save)
+        btnBack = findViewById(R.id.btn_back)
+        tvPageTitle = findViewById(R.id.tv_page_title)
 
         // 获取传递的备忘录ID，-1代表新增
         editId = intent.getLongExtra(MemoListActivity.KEY_MEMO_ID, -1L)
         
-        // 编辑模式：回填旧数据
+        // 根据模式设置页面标题
         if (editId != -1L) {
+            tvPageTitle.text = "编辑备忘录"
+            // 编辑模式：回填旧数据
             val memo = dao.getMemoById(editId)
             memo?.let {
                 etTitle.setText(it.title)
                 etContent.setText(it.content)
             }
+        } else {
+            tvPageTitle.text = "新建备忘录"
+        }
+
+        // 返回按钮
+        btnBack.setOnClickListener {
+            finish()
         }
 
         // 保存按钮点击事件

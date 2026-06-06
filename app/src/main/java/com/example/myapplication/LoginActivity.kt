@@ -18,6 +18,7 @@ import android.widget.Toast
 import android.view.View
 // AppCompatActivity：兼容低版本Android的Activity基类
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.utils.SPUtil
 
 /**
  * 登录页面 Activity
@@ -25,9 +26,17 @@ import androidx.appcompat.app.AppCompatActivity
  *
  * 注意：
  *   - 登录验证改用 SQLite 数据库（UserDao）
- *   - 记住密码仍用 SharedPreferences（因为只存一条键值对，SP更方便）
+ *   - 记住密码和自动登录使用统一的SP工具类
  */
 class LoginActivity : AppCompatActivity() {
+
+    // SP常量key（统一命名，防止写错）
+    companion object {
+        const val KEY_ACCOUNT = "save_account"
+        const val KEY_PWD = "save_pwd"
+        const val KEY_REMEMBER = "is_remember"
+        const val KEY_AUTO = "is_auto_login"
+    }
 
     // onCreate：Activity创建时自动调用的方法，整个生命周期只调用一次
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,66 +44,38 @@ class LoginActivity : AppCompatActivity() {
         // setContentView：把XML布局文件加载到屏幕上显示
         setContentView(R.layout.activity_login)
 
-        // ============================================
-        // 自动登录判断（核心功能）
-        //
-        // 流程：
-        //   1. 读取设置中的“自动登录”开关状态
-        //   2. 读取保存的用户账号
-        //   3. 如果开关打开 && 有保存的账号 → 直接跳主页，不用输入密码
-        //   4. 否则正常显示登录页
-        // ============================================
-        val spSetting = getSharedPreferences("SETTING", MODE_PRIVATE)
-        val autoLogin = spSetting.getBoolean("auto_login", false)
-
-        val spUser = getSharedPreferences("USER_DATA", MODE_PRIVATE)
-        val savedAccount = spUser.getString("account", "")
-
-        // 如果开启了自动登录，并且有保存的账号，直接跳主页
-        if (autoLogin && !savedAccount.isNullOrEmpty()) {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("USER_ACCOUNT", savedAccount)
-            startActivity(intent)
-            finish()
-            return  // 直接返回，不执行下面的登录页逻辑
-        }
-
-        // ============================================
-        // 绑定控件：通过findViewById找到XML中定义的控件
-        // R.id.xxx 就是XML中 android:id="@+id/xxx" 的对应
-        // ============================================
+        // 绑定控件
         val etAccount = findViewById<EditText>(R.id.et_account)       // 账号输入框
         val etPwd = findViewById<EditText>(R.id.et_pwd)               // 密码输入框
         val btnLogin = findViewById<Button>(R.id.btn_login)           // 登录按钮
         val cbRemember = findViewById<CheckBox>(R.id.cb_remember)     // 记住密码复选框
+        val cbAuto = findViewById<CheckBox>(R.id.cb_auto)             // 自动登录复选框
         val loading = findViewById<ProgressBar>(R.id.loading)         // 加载进度条
 
         // ============================================
-        // 打开页面时，自动读取保存的账号密码
+        // 页面初始化：读取SP，回填账号密码、勾选状态
         // ============================================
+        val isRemember = SPUtil.getBoolean(KEY_REMEMBER)
+        val isAuto = SPUtil.getBoolean(KEY_AUTO)
+        cbRemember.isChecked = isRemember
+        cbAuto.isChecked = isAuto
 
-        // getSharedPreferences：获取本地存储工具
-        //   第1个参数 "USER_DATA" = 存储文件名（可以自定义）
-        //   第2个参数 MODE_PRIVATE = 只有本APP能读写这个数据
-        val sp = getSharedPreferences("USER_DATA", MODE_PRIVATE)
+        // 记住密码开启→填充账号密码
+        if (isRemember) {
+            etAccount.setText(SPUtil.getString(KEY_ACCOUNT))
+            etPwd.setText(SPUtil.getString(KEY_PWD))
+        }
 
-        // getBoolean：读取布尔值
-        //   第1个参数 "remember" = 键名（保存时用的名字）
-        //   第2个参数 false = 默认值（如果没有保存过，就返回false）
-        val remember = sp.getBoolean("remember", false)
-
-        // 如果之前勾选了"记住密码"，就自动填写
-        if (remember) {
-            // getString：读取字符串，第2个参数是默认值
-            val savedAccount = sp.getString("account", "")    // 读取保存的账号
-            val savedPwd = sp.getString("pwd", "")            // 读取保存的密码
-
-            // setText：把读取到的数据填写到输入框
-            etAccount.setText(savedAccount)
-            etPwd.setText(savedPwd)
-
-            // isChecked = true：让复选框变成选中状态
-            cbRemember.isChecked = true
+        // 自动登录开启且记住密码→直接跳转主页
+        if (isAuto && isRemember) {
+            val savedAccount = SPUtil.getString(KEY_ACCOUNT)
+            if (savedAccount.isNotEmpty()) {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("USER_ACCOUNT", savedAccount)
+                startActivity(intent)
+                finish()
+                return  // 直接返回，不执行下面的登录页逻辑
+            }
         }
 
         // ============================================
@@ -165,26 +146,21 @@ class LoginActivity : AppCompatActivity() {
             // --------------------------------------------
             Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show()
 
-            // 如果勾选了"记住密码"，就保存到本地
-            if (cbRemember.isChecked) {
-                // sp.edit()：获取编辑器，用于写入数据
-                val editor = sp.edit()
-
-                // putString：保存字符串键值对
-                //   第1个参数 = 键名（读取时用这个名字找）
-                //   第2个参数 = 要保存的值
-                editor.putString("account", account)       // 保存账号
-                editor.putString("pwd", pwd)               // 保存密码
-                editor.putBoolean("remember", true)        // 保存"已记住"标记
-
-                // apply()：提交保存（异步执行，不会卡住界面）
-                // 也可以用 commit()，但那是同步的，可能卡顿
-                editor.apply()
+            // 登录成功：保存勾选状态+账号密码
+            val remember = cbRemember.isChecked
+            val auto = cbAuto.isChecked
+            SPUtil.putBoolean(KEY_REMEMBER, remember)
+            SPUtil.putBoolean(KEY_AUTO, auto)
+            
+            // 勾选记住密码才存储账号密码，否则清空
+            if (remember) {
+                SPUtil.putString(KEY_ACCOUNT, account)
+                SPUtil.putString(KEY_PWD, pwd)
             } else {
-                // 没勾选"记住密码" → 清除之前保存的所有数据
-                // .clear()：清除该SharedPreferences中的所有键值对
-                // .apply()：提交清除操作
-                sp.edit().clear().apply()
+                SPUtil.remove(KEY_ACCOUNT)
+                SPUtil.remove(KEY_PWD)
+                // 如果取消记住密码，也取消自动登录
+                SPUtil.putBoolean(KEY_AUTO, false)
             }
 
             // --------------------------------------------

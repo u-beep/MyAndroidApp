@@ -70,16 +70,33 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- 记住密码 -->
-    <CheckBox
-        android:id="@+id/cb_remember"
-        android:layout_width="wrap_content"
+    <!-- 记住密码、自动登录行 -->
+    <LinearLayout
+        android:id="@+id/checkbox_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="记住密码"
-        android:minHeight="48dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp_10"
         app:layout_constraintTop_toBottomOf="@id/til_pwd"
-        android:layout_marginTop="@dimen/dp_10" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!-- 记住密码 -->
+        <CheckBox
+            android:id="@+id/cb_remember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="记住密码"
+            android:minHeight="48dp" />
+
+        <!-- 自动登录 -->
+        <CheckBox
+            android:id="@+id/cb_auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="自动登录"
+            android:layout_marginStart="30dp"
+            android:minHeight="48dp" />
+    </LinearLayout>
 
     <!-- 登录按钮 -->
     <Button
@@ -90,7 +107,7 @@
         android:backgroundTint="@color/btn_color_selector"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cb_remember"
+        app:layout_constraintTop_toBottomOf="@+id/checkbox_layout"
         android:layout_marginTop="@dimen/dp_20" />
 
     <!-- 去注册按钮 -->
