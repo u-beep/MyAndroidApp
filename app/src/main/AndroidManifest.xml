@@ -129,6 +129,14 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <!-- 新闻详情页面 -->
+        <activity
+            android:name=".NewsDetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication"
+            android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
 </manifest>

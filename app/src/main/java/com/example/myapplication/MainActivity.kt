@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager2.widget.ViewPager2
 import com.example.myapplication.utils.SPUtil
+import android.view.MotionEvent
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * 主页面 Activity（singleTask启动模式 + ViewPager2滑动 + Fragment切换）
@@ -109,6 +111,67 @@ class MainActivity : AppCompatActivity(), FragCallBack {
                 R.id.rb_user -> viewPager.currentItem = 1
                 R.id.rb_mine -> viewPager.currentItem = 2
                 R.id.rb_news -> viewPager.currentItem = 3
+            }
+        }
+
+        // ========== 解决ViewPager2嵌套RecyclerView滑动冲突 ==========
+        // 在RecyclerView上设置触摸监听，优先处理上下滑动
+        // 通过post延迟执行，确保Fragment视图已创建
+        viewPager.post {
+            setupRecyclerViewTouch(viewPager)
+        }
+    }
+
+    /**
+     * 解决ViewPager2嵌套RecyclerView滑动冲突
+     *
+     * 原因：ViewPager2内部是RecyclerView，手指稍微左右偏移就会被拦截
+     * 导致新闻页面的RecyclerView上下滑不动
+     *
+     * 方案：找到ViewPager2内部的RecyclerView（第0个子View），
+     * 遍历其可见的子条目，如果条目中包含新闻RecyclerView，
+     * 就在该RecyclerView上添加触摸监听，按下时禁止ViewPager2拦截触摸事件
+     */
+    private fun setupRecyclerViewTouch(viewPager: ViewPager2) {
+        // ViewPager2内部第0个子View就是它的RecyclerView
+        val vpRecyclerView = viewPager.getChildAt(0) as? RecyclerView ?: return
+
+        // 监听ViewPager2的页面滚动，滚动停止后重新绑定触摸监听
+        vpRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    bindInnerRecyclerViewTouch(vpRecyclerView, viewPager)
+                }
+            }
+        })
+
+        // 初始绑定一次
+        bindInnerRecyclerViewTouch(vpRecyclerView, viewPager)
+    }
+
+    /**
+     * 遍历ViewPager2内部RecyclerView的可见子条目，
+     * 找到新闻RecyclerView并绑定触摸事件
+     */
+    private fun bindInnerRecyclerViewTouch(vpRecyclerView: RecyclerView, viewPager: ViewPager2) {
+        for (i in 0 until vpRecyclerView.childCount) {
+            val pageView = vpRecyclerView.getChildAt(i)
+            val innerRv = pageView?.findViewById<RecyclerView>(R.id.rv_news) ?: continue
+
+            // 在新闻RecyclerView上设置触摸监听
+            // 按下时通知父View不要拦截触摸事件，让RecyclerView自己处理上下滑动
+            innerRv.setOnTouchListener { _, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
+                        // 告诉ViewPager2：别拦截我！我要自己处理滑动
+                        viewPager.requestDisallowInterceptTouchEvent(true)
+                    }
+                    MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                        // 手指抬起，恢复ViewPager2的拦截能力
+                        viewPager.requestDisallowInterceptTouchEvent(false)
+                    }
+                }
+                false  // 返回false，不消费事件，让RecyclerView正常处理
             }
         }
     }

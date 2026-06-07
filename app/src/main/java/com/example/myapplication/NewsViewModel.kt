@@ -54,7 +54,7 @@ class NewsViewModel : ViewModel() {
                 try {
                     val resp = GsonUtil.jsonToBean(json, NewsResp::class.java)
                     if (resp.code == 200) {
-                        newsData.value = resp.data
+                        newsData.value = resp.newslist
                     } else {
                         errorMsg.value = "接口返回错误码：${resp.code}"
                     }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================ -->
+<!-- 列表底脚布局：加载中 / 到底了               -->
+<!-- ============================================ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <!-- 加载中旋转动画 -->
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="8dp" />
+
+    <!-- 提示文字：正在加载... / 没有更多了 -->
+    <TextView
+        android:id="@+id/tv_footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="正在加载..."
+        android:textSize="13sp"
+        android:textColor="@color/text_hint" />
+
+</LinearLayout>
