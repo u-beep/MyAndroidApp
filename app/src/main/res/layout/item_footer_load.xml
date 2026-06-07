@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================ -->
+<!-- 底部上拉加载脚布局                            -->
+<!-- 多布局TYPE_FOOT使用                          -->
+<!-- 显示「加载中/没有更多」状态                   -->
+<!-- ============================================ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_12"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <!-- 加载动画（加载中时显示） -->
+    <ProgressBar
+        android:id="@+id/pb_footer"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:visibility="visible" />
+
+    <!-- 底部文案 -->
+    <TextView
+        android:id="@+id/tv_footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="正在加载更多..."
+        android:textSize="@dimen/text_14"
+        android:textColor="@color/text_hint"
+        android:layout_marginStart="@dimen/dp_8" />
+
+</LinearLayout>

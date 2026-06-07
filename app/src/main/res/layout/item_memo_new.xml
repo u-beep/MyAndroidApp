@@ -1,33 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================ -->
+<!-- 普通备忘录条目布局                            -->
+<!-- 多布局TYPE_NORMAL使用                        -->
+<!-- ============================================ -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="15dp">
+    android:background="@color/bg_card"
+    android:padding="@dimen/dp_16"
+    android:layout_marginStart="@dimen/dp_12"
+    android:layout_marginEnd="@dimen/dp_12"
+    android:layout_marginTop="@dimen/dp_8"
+    android:layout_marginBottom="@dimen/dp_4">
 
     <!-- 备忘录标题 -->
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="#000000"/>
+        android:textSize="@dimen/text_18"
+        android:textColor="@color/text_black"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end" />
 
     <!-- 备忘录内容预览 -->
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="#666666"
-        android:layout_marginTop="4dp"/>
+        android:textSize="@dimen/text_14"
+        android:textColor="@color/text_gray"
+        android:layout_marginTop="@dimen/dp_5"
+        android:maxLines="2"
+        android:ellipsize="end" />
 
     <!-- 创建时间 -->
     <TextView
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:textColor="#999999"
-        android:layout_marginTop="4dp"/>
+        android:textSize="@dimen/text_12"
+        android:textColor="@color/text_hint"
+        android:layout_marginTop="@dimen/dp_5" />
+
 </LinearLayout>
